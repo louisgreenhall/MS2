@@ -1,7 +1,4 @@
-li {
-  float: left;
-  margin-left: 10px;
-}
+
 
 
 
@@ -97,6 +94,17 @@ li {
 }
 /* TEAM LADDER CSS*/
 
+.container {
+  width: 100%;
+  max-width:initial;
+}
+.container .row {
+  margin: 0;
+}
+.container .row .col {
+  padding: 0;
+}
+
 .ladder tr {
   height: 25px;
 }
@@ -119,9 +127,9 @@ li {
 
 
 .ladder tr td:nth-child(1),
-.ladder tr td:nth-child(3),
+.ladder tr td:nth-child(4),
 .ladder tr th:nth-child(1),
-.ladder tr th:nth-child(3)
+.ladder tr th:nth-child(4)
  {
    text-align: left;
  }
@@ -131,19 +139,26 @@ li {
    display: none;
  }
 
+ table td:nth-child(3),
+ table th:nth-child(3) {
+   display: none;
+ }
+
+ .toggleCollapse {
+   position: absolute;
+   top: 0;
+   right: 0;
+ }
+
+
  table.collapse td:nth-child(2),
- table.collapse th:nth-child(2) {
+ table.collapse td:nth-child(3),
+ table.collapse th:nth-child(2),
+ table.collapse th:nth-child(3) {
    display: table-cell;
  }
 
 
- .standings span {
-   display: none;
- }
-
- .collapse span {
-  display: block;
-}
 /* MATCH INFO CSS*/
 .match-info {
   display: none;
@@ -241,4 +256,15 @@ li {
 .match-info .timeline .timeline-event.away .event-content {
   background: green;
   left: calc(50% + 10%)
+}
+.btn-small .period-selector {
+  margin-left: 5px;
+  margin-right: 5px;
+  width: 40px;
+  text-align: center;
+  padding;  0 0;
+}
+
+.timeline .row .s3 {
+  padding: 5px;
 }

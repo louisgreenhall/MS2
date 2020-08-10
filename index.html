@@ -14,149 +14,121 @@
 </head>
 
 <body>
-
     <button class="toggleCollapse">Toggle</button>
-    <section class="ladder row">
-        <div class="col s6">
+    <section class="container">
+        <div class="row">
+            <div class="ladder col s1">
+                <table class="">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th></th>
+                            <th></th>
+                            <th>Name</th>
+                            <th>P</th>
+                            <th>W</th>
+                            <th>L</th>
+                            <th>D</th>
 
+                        </tr>
+                    </thead>
+                    <tbody class="standings">
 
-
-            <table class="collapse">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th></th>
-                        <th>Name</th>
-                        <th>P</th>
-                        <th>W</th>
-                        <th>L</th>
-                        <th>D</th>
-                        
-                    </tr>
-                </thead>
-                <tbody class="standings">
-
-                </tbody>
-            </table>
-
-        </div>
-    </section>
-    <section class="team-info">
-        <div>
-            <ul class="matches">
-            </ul>
-        </div>
-        <section id="match-info" class="match-info container-fluid">
-
-
-
-            <div class="row">
-                <div class="col s3">
+                    </tbody>
+                </table>
+            </div>
+            <div class="fixtures col s2">
+                <ul class="matches">
+                </ul>
+            </div>
+            <div class="matchInfo col s9">
+                <div class="container">
                     <div class="row">
-                        <div class="col s3"><button class="period-selector" period="period1" name="1st-period">1st
-                                Period</button></div>
-                        <div class="col s3"><button class="period-selector" period="period2" name="2nd-period">2nd
-                                Period</button></div>
-                        <div class="col s3"><button class="period-selector" period="period3" name="3rd-period">3rd
-                                Period</button></div>
-                        <div class="col s3"><button class="period-selector" period="period4" name="4th-period">4th
-                                Period</button></div>
+                        <div class="timeline col s4">
+                            <div class="row">
+                                <div class="col s3"><button class="period-selector btn-small" period="period1"
+                                        name="1st-period">Q1</button></div>
+                                <div class="col s3"><button class="period-selector btn-small" period="period2"
+                                        name="2nd-period">Q2</button></div>
+                                <div class="col s3"><button class="period-selector btn-small" period="period3"
+                                        name="3rd-period">Q3</button></div>
+                                <div class="col s3"><button class="period-selector btn-small" period="period4"
+                                        name="4th-period">Q4</button></div>
+                            </div>
+                            <div class="timeline">
+
+                                <div class="period period1">
+
+                                    <div class="timeline-event major-event match-start">
+                                        <div class="event-content">
+                                            Match Start
+                                        </div>
+                                    </div>
+                                    <div class="period-events">
+
+                                    </div>
+                                    <div class="timeline-event major-event period-end">
+                                        <div class="event-content">Period End</div>
+                                    </div>
+
+                                </div>
+                                <div class="period period2">
+
+                                    <div class="timeline-event major-event period-start">
+                                        <div class="event-content">
+                                            Period Start
+                                        </div>
+                                    </div>
+                                    <div class="period-events">
+
+                                    </div>
+                                    <div class="timeline-event major-event period-end">
+                                        <div class="event-content">Period End</div>
+                                    </div>
+
+                                </div>
+                                <div class="period period3">
+
+                                    <div class="timeline-event major-event period-start">
+                                        <div class="event-content">
+                                            Period Start
+                                        </div>
+                                    </div>
+                                    <div class="period-events">
+
+                                    </div>
+                                    <div class="timeline-event major-event period-end">
+                                        <div class="event-content">Period End</div>
+                                    </div>
+
+                                </div>
+                                <div class="period period4">
+
+                                    <div class="timeline-event major-event period-start">
+                                        <div class="event-content">
+                                            Period Start
+                                        </div>
+                                    </div>
+                                    <div class="period-events">
+
+                                    </div>
+                                    <div class="timeline-event major-event match-end">
+                                        <div class="event-content">Match End</div>
+                                    </div>
+
+                                </div>
+
+
+                            </div>
+
+                        </div>
+                        <div class="matchStats col s5">match Stats</div>
+                        <div class="map col s3">map</div>
                     </div>
-                    <div class="timeline">
-
-                        <div class="period period1">
-
-                            <div class="timeline-event major-event match-start">
-                                <div class="event-content">
-                                    Match Start
-                                </div>
-                            </div>
-                            <div class="period-events">
-
-                            </div>
-                            <div class="timeline-event major-event period-end">
-                                <div class="event-content">Period End</div>
-                            </div>
-
-                        </div>
-                        <div class="period period2">
-
-                            <div class="timeline-event major-event period-start">
-                                <div class="event-content">
-                                    Period Start
-                                </div>
-                            </div>
-                            <div class="period-events">
-
-                            </div>
-                            <div class="timeline-event major-event period-end">
-                                <div class="event-content">Period End</div>
-                            </div>
-
-                        </div>
-                        <div class="period period3">
-
-                            <div class="timeline-event major-event period-start">
-                                <div class="event-content">
-                                    Period Start
-                                </div>
-                            </div>
-                            <div class="period-events">
-
-                            </div>
-                            <div class="timeline-event major-event period-end">
-                                <div class="event-content">Period End</div>
-                            </div>
-
-                        </div>
-                        <div class="period period4">
-
-                            <div class="timeline-event major-event period-start">
-                                <div class="event-content">
-                                    Period Start
-                                </div>
-                            </div>
-                            <div class="period-events">
-
-                            </div>
-                            <div class="timeline-event major-event match-end">
-                                <div class="event-content">Match End</div>
-                            </div>
-
-                        </div>
-
-
-                    </div>
                 </div>
-                <div class="col s5">2</div>
-                <div class="col s4">3</div>
             </div>
-
-            <div class="container">
-
-                <section></section>
-                <div class="timeline-event">
-
-                </div>
-                <section></section>
-                <div class="timeline-event">
-
-                </div>
-                <section></section>
-                <div class="timeline-event">
-
-                </div>
-                <section></section>
-                <div class="timeline-event">
-
-                </div>
-                <div class="timeline">
-                </div>
-
-            </div>
-        </section>
+        </div>
     </section>
-
     <!-- <section>
         <div class="test ADE" style="height: 50px; width: 400px;"></div>
         <div class="test BRI" style="height: 50px; width: 400px;"></div>

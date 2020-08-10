@@ -27,9 +27,10 @@ $(() => {
 
     $(".toggleCollapse").on("click", () => {
         $('.ladder table').toggleClass("collapse");
+        $('.ladder div').first().toggleClass("s6").toggleClass("s2");
     })
 
-  
+
 
     let standingsUrl = "https://corsaway.herokuapp.com/proxy?url=https://api.sportradar.com/australianrules/trial/v2/en/seasons/sr:season:72434/standings.json?api_key=rqz7xyyqush2cn5m838nffdy";
     fetch(standingsUrl)
@@ -41,16 +42,20 @@ $(() => {
 
 
                 // add table row to standings table with competitorId attribute that can be used later once link clicked
-                $(".standings").append(`<tr>
+                $(".standings").append(`<tr abbreviation="${abbreviations[team.competitor_standing.competitor.name]}">
                                      <td>${team.competitor_standing.rank}</td>
                                      <td>
                                         <a href="#match-info" class="team" competitorId="${team.competitor_standing.competitor.id}"> 
                                             <img src="assets/imgs/${abbreviations[team.competitor_standing.competitor.name]}.png">
-                                            <span class="abbreviation">${abbreviations[team.competitor_standing.competitor.name]}</span>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="#match-info" class="team" competitorId="${team.competitor_standing.competitor.id}"> 
+                                            ${abbreviations[team.competitor_standing.competitor.name]}
                                         </a>
                                     </td>
                                      <td>
-                                         <a href="#match-info" class="team" competitorId="${team.competitor_standing.competitor.id}">${team.competitor_standing.competitor.name}</a>
+                                         <a href="#" class="team" competitorId="${team.competitor_standing.competitor.id}">${team.competitor_standing.competitor.name}</a>
                                      </td>
                                      
                                      <td>${team.competitor_standing.played}</td>
@@ -66,9 +71,13 @@ $(() => {
         let target = event.target;
         console.log(target)
         if ($(event.target).first().tagName != "A") {
-           target = $(event.target).closest("a");
+            target = $(event.target).closest("a");
         }
         
+        var row = $(event.target).closest("tr");
+        row.addClass($(row).attr("abbreviation"));
+
+
         let id = $(target).attr("competitorId"); // store attribute of clicked competitorId
         fetchSeasonDetails("sr:season:72434").then(function (json) {
 
