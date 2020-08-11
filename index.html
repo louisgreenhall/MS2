@@ -9,21 +9,22 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css"
         integrity="sha256-h20CPZ0QyXlBuAw7A+KluUYx/3pK+c7lYEpqLTlxjYQ=" crossorigin="anonymous" />
     <link rel="stylesheet" href="assets/style.css">
+    <link rel="stylesheet" href="assets/gradients.css">
 
     <title>Aussie Rules</title>
 </head>
 
 <body>
-    <button class="toggleCollapse">Toggle</button>
+
     <section class="container">
         <div class="row">
-            <div class="ladder col s1">
+            <div class="ladder col s4">
                 <table class="">
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th></th>
-                            <th></th>
+                            <th colspan="2" class="buttonExpanded hidden"><button class="btn-small">Ladder</button></th>
+                            <th class="buttonExpanded"></th>
                             <th>Name</th>
                             <th>P</th>
                             <th>W</th>
@@ -41,7 +42,7 @@
                 <ul class="matches">
                 </ul>
             </div>
-            <div class="matchInfo col s9">
+            <div class="matchInfo col s6">
                 <div class="container">
                     <div class="row">
                         <div class="timeline col s4">

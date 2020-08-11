@@ -1,9 +1,6 @@
 // let apiKeyV2 = "rqz7xyyqush2cn5m838nffdy";
 
 $(() => {
-
-
-
     var abbreviations = {
         "Adelaide Crows": "ADE",
         "Brisbane Lions": "BRI",
@@ -25,10 +22,26 @@ $(() => {
         "Western Bulldogs": "BUL"
     };
 
-    $(".toggleCollapse").on("click", () => {
-        $('.ladder table').toggleClass("collapse");
-        $('.ladder div').first().toggleClass("s6").toggleClass("s2");
-    })
+   
+
+// collapse button functions
+$(".buttonExpanded").on("click", () => {
+    expand();
+})
+
+    function collapse() {
+        $('.ladder table').addClass("collapse");
+        $('.ladder').removeClass("s4").addClass("s1 ladder-toggle");
+        $('.matchInfo').removeClass("s6").addClass("s9");
+        $(".buttonExpanded").toggleClass("hidden");
+    }
+
+    function expand() {
+        $('.ladder table').removeClass("collapse");
+        $('.ladder').addClass("s4").removeClass("s1 ladder-toggle");
+        $('.matchInfo').addClass("s6").removeClass("s9");
+        $(".buttonExpanded").toggleClass("hidden");
+    }
 
 
 
@@ -68,6 +81,11 @@ $(() => {
 
     $("body").on("click", ".team", function (event) {
 
+
+        if (!$('.ladder table').hasClass("collapse")) {
+            collapse();
+        } // If ladder is not collapsed, clicking team name will auto collapse 
+
         let target = event.target;
         console.log(target)
         if ($(event.target).first().tagName != "A") {
@@ -104,6 +122,8 @@ $(() => {
 
     })
 
+
+
     function getLatestMatchWithStatistics(matches) {
 
         let completeMatches = [];
@@ -122,6 +142,7 @@ $(() => {
 
         return completeMatches.pop();
     };
+
 
 
     $("body").on("click", ".match", function (event) {
@@ -145,21 +166,6 @@ $(() => {
                     teamType = timelineEvent.team;
                 }
 
-
-                // let periodClass = timeline_event.period_name.toLowerCase().replace(" ", "");
-                // $(`.${periodClass}.timeline`).append()
-                // TO BE USED WITH ADDING TIMELINE EVENTS TO RELEVANT SECTIONS
-
-
-
-                // let timelineEventNode = `<div class="timeline-event ${teamType}">
-                //                             <div class="card timeline-content">
-                //                                 <span class="card-title gradient white-text text-darken-4">${timelineEvent.type}</span>
-                //                             </div>
-                //                             <div class="timeline-badge red lighten-3 white-text"></div>
-                //                         </div>`;
-
-                // if (teamType != "neither") $(".timeline").append(timelineEventNode);
 
 
 
@@ -252,4 +258,3 @@ $(() => {
     }
 });
 
-// Button on(click) events
