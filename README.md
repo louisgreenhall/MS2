@@ -37,6 +37,11 @@ In this section, you should mention all of the languages, frameworks, libraries,
 
 !!!!!! - [Json Formatter](https://jsonformatter.org/)
 To help me understand the structure of the data returned from the APIs, I used JSON formatter's tree view, since this gave an easy to understand visualisation of the data in a nested structure.
+
+
+- [Fiddler](https://www.telerik.com/download/fiddler-everywhere)
+Fiddler allowed my to save responses from my API without adding too heavily to my calls-per-month allowance from the AFL API (1000)
+
 ## Testing
 
 In this section, you need to convince the assessor that you have conducted enough testing to legitimately believe that the site works well. Essentially, in this part you will want to go over all of your user stories from the UX section and ensure that they all work as intended, with the project providing an easy and straightforward way for the users to achieve their goals.
@@ -57,7 +62,8 @@ You should also mention in this section any interesting bugs or problems you dis
 
 If this section grows too long, you may want to split it off into a separate file and link to it from here.
 
-
+!!!!!!!!!!!!!!!! Throttling and usage limits (1000 requests per month) were an issue whilst testing, to get around this I used Fiddler auto response rules to return saved responses for a handful of teams and matches in order to make sure my usage limits were sufficient, and to ensure that data would load without being rejected due to throttling.
+ During testing - An Issue with the API was discovered, Q2, PAP vs RIC has no period scores (Match ID: sr:match:22821963)
 
 ## Deployment
 

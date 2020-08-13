@@ -32,14 +32,14 @@ $(".buttonExpanded").on("click", () => {
     function collapse() {
         $('.ladder table').addClass("collapse");
         $('.ladder').removeClass("s4").addClass("s1 ladder-toggle");
-        $('.matchInfo').removeClass("s6").addClass("s9");
+        $('.match-info').removeClass("s6").addClass("s9");
         $(".buttonExpanded").toggleClass("hidden");
     }
 
     function expand() {
         $('.ladder table').removeClass("collapse");
         $('.ladder').addClass("s4").removeClass("s1 ladder-toggle");
-        $('.matchInfo').addClass("s6").removeClass("s9");
+        $('.match-info').addClass("s6").removeClass("s9");
         $(".buttonExpanded").toggleClass("hidden");
     }
 
@@ -75,6 +75,7 @@ $(".buttonExpanded").on("click", () => {
                                      <td>${team.competitor_standing.win}</td>
                                      <td>${team.competitor_standing.loss}</td>
                                      <td>${team.competitor_standing.draw}</td>
+                                     <td>${team.competitor_standing.points_percentage}</td>
                                      </tr>`);
             };
         });
@@ -96,7 +97,7 @@ $(".buttonExpanded").on("click", () => {
         row.addClass($(row).attr("abbreviation"));
 
 
-        let id = $(target).attr("competitorId"); // store attribute of clicked competitorId
+        let id = $(target).attr("competitorId"); // store attribute of clicked competitorId.
         fetchSeasonDetails("sr:season:72434").then(function (json) {
 
             let matches = filterMatchesByTeam(json, id);
@@ -109,15 +110,19 @@ $(".buttonExpanded").on("click", () => {
                 let matchId = match.sport_event.id;
 
 
-                // add list element to matches list with matchId attribute that can be used later once link clicked
+                // add list element to matches list with matchId attribute that can be used later once link clicked.
                 $(".matches").append(`<li style="padding-left:10px;"> <a href="#match-info" class="match" matchId="${matchId}">${match.sport_event.sport_event_context.stage.round} - ${match.sport_event.competitors[0].abbreviation} vs ${match.sport_event.competitors[1].abbreviation}</a></li>`)
             }
 
             $("#match-info").show()
 
             let latestMatch = getLatestMatchWithStatistics(matches);
+
+           populateMatchTimeline(latestMatch.sport_event.id) 
+
             console.log(latestMatch);
-            // $("latestMatch"); // want to show the match when I find the latest match
+            $(`[matchId='${latestMatch.sport_event.id}']`).addClass("active"); 
+            // want to show the match when I find the latest match.
         });
 
     })
@@ -136,9 +141,8 @@ $(".buttonExpanded").on("click", () => {
             if (currentMatchKeys.includes("statistics") || currentMatch.sport_event_status.status === "live") {
                 completeMatches.push(currentMatch)
             };
-
+                
         }
-
 
         return completeMatches.pop();
     };
@@ -149,6 +153,22 @@ $(".buttonExpanded").on("click", () => {
 
         let id = $(event.target).attr("matchId"); // store matchId attribute of clicked element 
 
+        populateMatchTimeline(id);
+
+    });
+
+    $(".period-selector").on("click", function (event) {
+        let id = $(event.target).attr("period");
+        console.log(id);
+        $(".period").hide();
+
+        $(`.${id}`).show();
+
+
+
+    })
+
+    function populateMatchTimeline(id) {
         fetchMatchTimeline(id).then(function (json) {
 
             let i = 0;
@@ -207,19 +227,7 @@ $(".buttonExpanded").on("click", () => {
 
             }
         })
-
-    });
-
-    $(".period-selector").on("click", function (event) {
-        let id = $(event.target).attr("period");
-        console.log(id);
-        $(".period").hide();
-
-        $(`.${id}`).show();
-
-
-
-    })
+    }
 
     function filterMatchesByTeam(json, id) {
         let matches = [];
