@@ -22,12 +22,12 @@ $(() => {
         "Western Bulldogs": "BUL"
     };
 
-   
 
-// collapse button functions
-$(".buttonExpanded").on("click", () => {
-    expand();
-})
+
+    // collapse button functions
+    $(".buttonExpanded").on("click", () => {
+        expand();
+    })
 
     function collapse() {
         $('.ladder table').addClass("collapse");
@@ -92,7 +92,7 @@ $(".buttonExpanded").on("click", () => {
         if ($(event.target).first().tagName != "A") {
             target = $(event.target).closest("a");
         }
-        
+
         var row = $(event.target).closest("tr");
         row.addClass($(row).attr("abbreviation"));
 
@@ -118,15 +118,90 @@ $(".buttonExpanded").on("click", () => {
 
             let latestMatch = getLatestMatchWithStatistics(matches);
 
-           populateMatchTimeline(latestMatch.sport_event.id) 
+            populateMatchTimeline(latestMatch.sport_event.id);
 
             console.log(latestMatch);
-            $(`[matchId='${latestMatch.sport_event.id}']`).addClass("active"); 
+            $(`[matchId='${latestMatch.sport_event.id}']`).addClass("active");
             // want to show the match when I find the latest match.
+
+
+            $(".matchResultTitle").html("");
+            $(".homeTeam").html("");
+            $(".awayTeam").html("");
+            $(".homeDisplayScore").html("");
+            $(".awayDisplayScore").html("");
+            
+
+            $(".matchResultTitle").append(`Round ${latestMatch.sport_event.sport_event_context.stage.round} of ${latestMatch.sport_event.sport_event_context.season.name}`)
+
+            $(".homeTeam").append(`<img src="assets/imgs/${abbreviations[latestMatch.sport_event.competitors[0].name]}.png">
+            ${abbreviations[latestMatch.sport_event.competitors[0].name]}`)
+            $(".awayTeam").append(`<img src="assets/imgs/${abbreviations[latestMatch.sport_event.competitors[1].name]}.png">
+            ${abbreviations[latestMatch.sport_event.competitors[1].name]}`)
+
+            $(".homeDisplayScore").append(`${latestMatch.sport_event_status.home_display_score}`)
+            $(".awayDisplayScore").append(`${latestMatch.sport_event_status.away_display_score}`)
+
+
+           
+
+
+            $(".homeStats").html(getStatisticsHtml(latestMatch.statistics.competitors[1].statistics));
+            $(".awayStats").html(getStatisticsHtml(latestMatch.statistics.competitors[0].statistics));
+
+
+            
         });
 
     })
 
+    function getStatisticsHtml(stats) {
+
+        return `<table>
+        <tr>
+            <td>Behinds</td>
+            <td>${stats.behinds}</td>
+        </tr>
+        <tr>
+            <td>Disposals</td>
+            <td>${stats.disposals}</td>
+        </tr>
+        <tr>
+            <td>Free Kicks</td>
+            <td>${stats.free_kicks}</td>
+        </tr>
+        <tr>
+            <td>Goals</td>
+            <td>${stats.goals}</td>
+        </tr>
+        <tr>
+            <td>Handballs</td>
+            <td>${stats.handballs}</td>
+        </tr>
+        <tr>
+            <td>Hitouts</td>
+            <td>${stats.hitouts}</td>
+        </tr>
+        <tr>
+            <td>Kicks</td>
+            <td>${stats.kicks}</td>
+        </tr>
+        <tr>
+            <td>Marks</td>
+            <td>${stats.marks}</td>
+        </tr>
+        <tr>
+            <td>Marks Inside 50s</td>
+            <td>${stats.marks_inside_50s}</td>
+        </tr>
+        <tr>
+            <td>Tackles</td>
+            <td>${stats.tackles}</td>
+        </tr>
+
+    
+</table>`;
+    }
 
 
     function getLatestMatchWithStatistics(matches) {
@@ -141,7 +216,7 @@ $(".buttonExpanded").on("click", () => {
             if (currentMatchKeys.includes("statistics") || currentMatch.sport_event_status.status === "live") {
                 completeMatches.push(currentMatch)
             };
-                
+
         }
 
         return completeMatches.pop();
@@ -154,6 +229,8 @@ $(".buttonExpanded").on("click", () => {
         let id = $(event.target).attr("matchId"); // store matchId attribute of clicked element 
 
         populateMatchTimeline(id);
+
+
 
     });
 
@@ -265,4 +342,28 @@ $(".buttonExpanded").on("click", () => {
             });
     }
 });
+// MATCH STATS 
+// match.sport_event.competitors[0].name
+// match.sport_event.competitors[1].name
 
+// match.sport_event.id
+
+// match.sport_event.sport_event_context.season.name (AFL 2020)
+// match.sport_event.sport_event_context.stage.round
+// match.sport_event.sport_event_context.stage.number (standings)
+
+// match.sport_event.sport_event_status.home_score (TOTAL)
+// .matchsport_event.sport_event_status.away_score
+
+// match.sport_event.sport_event_status.home_display_score (GOAL.BEHINDS.TOTAL)
+// match.sport_event.sport_event_status.away_display_score
+
+// match.sport_event.statistics.competitors[0].statistics
+// match.sport_event.statistics.competitors[1].statistics
+
+//MAP
+// // 
+// match.sport_event.venue.capacity
+// match.sport_event.venue.city_name
+// match.sport_event.venue.map_coordinates
+// match.sport_event.venue.name

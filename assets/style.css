@@ -214,3 +214,28 @@ tr {
 .active {
   color: #ff2ef0;
 }
+
+/* Match Results */
+
+.homeTeam, .awayTeam {
+  text-align: center;
+}
+
+.homeDisplayScore, .awayDisplayScore {
+  text-align: center;
+}
+
+.homeTeam img, .awayTeam img {
+  height: auto;
+  max-height: 40px;
+  max-width: 40px;
+  text-align: center;
+  margin: auto;
+  margin-top: 30px;
+}
+
+.homeStats tr, .homeStats tr td, .awayStats tr, .awayStats tr td {
+  height: 20px;
+  max-height: 20px;
+  padding: 0;
+}
