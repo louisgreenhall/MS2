@@ -180,6 +180,11 @@ $(() => {
 </table>`;
     }
 
+    function isMatchCompleted(match) {
+        let currentMatchKeys = Object.keys(match);
+        return currentMatchKeys.includes("statistics") || match.sport_event_status.status === "live";
+    }
+
 
     function getLatestMatchWithStatistics(matches) {
 
@@ -188,9 +193,7 @@ $(() => {
         for (let i = 0; i < matches.length; i++) {
             let currentMatch = matches[i];
 
-            let currentMatchKeys = Object.keys(currentMatch);
-
-            if (currentMatchKeys.includes("statistics") || currentMatch.sport_event_status.status === "live") {
+            if (isMatchCompleted(currentMatch)) {
                 completeMatches.push(currentMatch)
             };
 
