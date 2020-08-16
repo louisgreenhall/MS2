@@ -239,3 +239,7 @@ tr {
   max-height: 20px;
   padding: 0;
 }
+
+.row .venue, .venueDetails {
+  border: 1px solid black;
+}

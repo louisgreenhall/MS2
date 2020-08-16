@@ -208,14 +208,14 @@ $(() => {
 
         let id = $(event.target).attr("matchId"); // store matchId attribute of clicked element 
 
-
-
         fetchMatchTimeline(id).then(function (json) {
             populateMatchTimeline(json);
             populateMatchStats(json);
         });
 
-
+        if (!isMatchCompleted()) {
+            fetchMatchProbabilities(matchId)
+        }
 
     });
 
@@ -240,14 +240,14 @@ $(() => {
         // want to show the match when I find the latest match.
 
 
-        $(".matchResultTitle").html("");
+        
         $(".homeTeam").html("");
         $(".awayTeam").html("");
         $(".homeDisplayScore").html("");
         $(".awayDisplayScore").html("");
 
 
-        $(".matchResultTitle").append(`Round ${latestMatch.sport_event.sport_event_context.stage.round} of ${latestMatch.sport_event.sport_event_context.season.name}`)
+        $(".matchResultTitle").text(`Round ${latestMatch.sport_event.sport_event_context.stage.round} of ${latestMatch.sport_event.sport_event_context.season.name}`)
 
         $(".homeTeam").append(`<img src="assets/imgs/${abbreviations[latestMatch.sport_event.competitors[0].name]}.png">
             ${abbreviations[latestMatch.sport_event.competitors[0].name]}`)
@@ -359,6 +359,17 @@ $(() => {
                 return response.json();
             });
     }
+
+    function fetchMatchProbabilities(matchId){
+        let probUrl = `https://corsaway.herokuapp.com/proxy?url=https://api.sportradar.com/australianrules/trial/v2/en/matches/${matchId}/probabilities.json?api_key=rqz7xyyqush2cn5m838nffdy`
+        return fetch(probUrl)
+        .then (function (response) {
+            return response.json();
+        });
+    }
+
+
+
 });
 
 
