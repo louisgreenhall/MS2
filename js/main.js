@@ -118,39 +118,16 @@ $(() => {
 
             let latestMatch = getLatestMatchWithStatistics(matches);
 
-            populateMatchTimeline(latestMatch.sport_event.id);
+            fetchMatchTimeline(latestMatch.sport_event.id).then(function (json) {
+                populateMatchTimeline(json);
+                populateMatchStats(json);
+            });
 
             console.log(latestMatch);
-            $(`[matchId='${latestMatch.sport_event.id}']`).addClass("active");
-            // want to show the match when I find the latest match.
 
 
-            $(".matchResultTitle").html("");
-            $(".homeTeam").html("");
-            $(".awayTeam").html("");
-            $(".homeDisplayScore").html("");
-            $(".awayDisplayScore").html("");
-            
-
-            $(".matchResultTitle").append(`Round ${latestMatch.sport_event.sport_event_context.stage.round} of ${latestMatch.sport_event.sport_event_context.season.name}`)
-
-            $(".homeTeam").append(`<img src="assets/imgs/${abbreviations[latestMatch.sport_event.competitors[0].name]}.png">
-            ${abbreviations[latestMatch.sport_event.competitors[0].name]}`)
-            $(".awayTeam").append(`<img src="assets/imgs/${abbreviations[latestMatch.sport_event.competitors[1].name]}.png">
-            ${abbreviations[latestMatch.sport_event.competitors[1].name]}`)
-
-            $(".homeDisplayScore").append(`${latestMatch.sport_event_status.home_display_score}`)
-            $(".awayDisplayScore").append(`${latestMatch.sport_event_status.away_display_score}`)
 
 
-           
-
-
-            $(".homeStats").html(getStatisticsHtml(latestMatch.statistics.competitors[1].statistics));
-            $(".awayStats").html(getStatisticsHtml(latestMatch.statistics.competitors[0].statistics));
-
-
-            
         });
 
     })
@@ -228,7 +205,12 @@ $(() => {
 
         let id = $(event.target).attr("matchId"); // store matchId attribute of clicked element 
 
-        populateMatchTimeline(id);
+
+
+        fetchMatchTimeline(id).then(function (json) {
+            populateMatchTimeline(json);
+            populateMatchStats(json);
+        });
 
 
 
@@ -245,65 +227,98 @@ $(() => {
 
     })
 
-    function populateMatchTimeline(id) {
-        fetchMatchTimeline(id).then(function (json) {
-
-            let i = 0;
-            let currentPeriod = 1;
-
-            $(".period").hide();
-            $(".period1").show();
-            $(".timeline .period-events").html(`<hr class="timeline-splitter" />`); // clearing contents in case already selected match fixture
-            while (i < json.timeline.length) {
-                let timelineEvent = json.timeline[i];
-
-                let teamType = "neither";
-
-                if (typeof timelineEvent.team !== "undefined") {
-                    teamType = timelineEvent.team;
-                }
 
 
 
 
-                // using a switch instead of if/else statements because there is a defined number of options available for timeline event types 
-                switch (timelineEvent.type) {
-                    case "match_started":
-                        console.log("match_started")
-                        break;
-                    case "period_start":
-                        console.log("period_start");
-                        console.log(currentPeriod);
+    function populateMatchStats(latestMatch) {
+
+        $(`[matchId='${latestMatch.sport_event.id}']`).addClass("active");
+        // want to show the match when I find the latest match.
 
 
-                        break;
-                    case "score_change":
-                        console.log("score_change")
+        $(".matchResultTitle").html("");
+        $(".homeTeam").html("");
+        $(".awayTeam").html("");
+        $(".homeDisplayScore").html("");
+        $(".awayDisplayScore").html("");
 
-                        $(`.timeline .period${currentPeriod} .period-events`).append(`<div class="timeline-event ${timelineEvent.team}">
+
+        $(".matchResultTitle").append(`Round ${latestMatch.sport_event.sport_event_context.stage.round} of ${latestMatch.sport_event.sport_event_context.season.name}`)
+
+        $(".homeTeam").append(`<img src="assets/imgs/${abbreviations[latestMatch.sport_event.competitors[0].name]}.png">
+            ${abbreviations[latestMatch.sport_event.competitors[0].name]}`)
+        $(".awayTeam").append(`<img src="assets/imgs/${abbreviations[latestMatch.sport_event.competitors[1].name]}.png">
+            ${abbreviations[latestMatch.sport_event.competitors[1].name]}`)
+
+        $(".homeDisplayScore").append(`${latestMatch.sport_event_status.home_display_score}`)
+        $(".awayDisplayScore").append(`${latestMatch.sport_event_status.away_display_score}`)
+
+
+        $(".homeStats").html(getStatisticsHtml(latestMatch.statistics.competitors[1].statistics));
+        $(".awayStats").html(getStatisticsHtml(latestMatch.statistics.competitors[0].statistics));
+
+    }
+
+    function populateMatchTimeline(json) {
+
+
+        let i = 0;
+        let currentPeriod = 1;
+
+        $(".period").hide();
+        $(".period1").show();
+        $(".timeline .period-events").html(`<hr class="timeline-splitter" />`); // clearing contents in case already selected match fixture
+        while (i < json.timeline.length) {
+            let timelineEvent = json.timeline[i];
+
+            let teamType = "neither";
+
+            if (typeof timelineEvent.team !== "undefined") {
+                teamType = timelineEvent.team;
+            }
+
+
+
+
+            // using a switch instead of if/else statements because there is a defined number of options available for timeline event types 
+            switch (timelineEvent.type) {
+                case "match_started":
+                    console.log("match_started")
+                    break;
+                case "period_start":
+                    console.log("period_start");
+                    console.log(currentPeriod);
+
+
+                    break;
+                case "score_change":
+                    console.log("score_change")
+
+                    $(`.timeline .period${currentPeriod} .period-events`).append(`<div class="timeline-event ${timelineEvent.team}">
                                                                 <div class="event-badge">${timelineEvent.match_time}</div>
                                                                 <div class="event-content">
 
                                                                     ${timelineEvent.home_score} - ${timelineEvent.away_score}
                                                                 </div>
                                                             </div>`);
-                        break;
-                    case "period_score":
-                        console.log("period_score")
-                        currentPeriod++;
-                        break;
-                    case "break_start":
-                        console.log("break_start")
-                        break;
-                    case "match_ended":
-                        console.log("match_ended")
-                        break;
-                }
-
-                i++;
-
+                    break;
+                case "period_score":
+                    console.log("period_score")
+                    currentPeriod++;
+                    break;
+                case "break_start":
+                    console.log("break_start")
+                    break;
+                case "match_ended":
+                    console.log("match_ended")
+                    break;
             }
-        })
+
+            i++;
+
+        }
+
     }
 
     function filterMatchesByTeam(json, id) {
@@ -342,24 +357,7 @@ $(() => {
             });
     }
 });
-// MATCH STATS 
-// match.sport_event.competitors[0].name
-// match.sport_event.competitors[1].name
 
-// match.sport_event.id
-
-// match.sport_event.sport_event_context.season.name (AFL 2020)
-// match.sport_event.sport_event_context.stage.round
-// match.sport_event.sport_event_context.stage.number (standings)
-
-// match.sport_event.sport_event_status.home_score (TOTAL)
-// .matchsport_event.sport_event_status.away_score
-
-// match.sport_event.sport_event_status.home_display_score (GOAL.BEHINDS.TOTAL)
-// match.sport_event.sport_event_status.away_display_score
-
-// match.sport_event.statistics.competitors[0].statistics
-// match.sport_event.statistics.competitors[1].statistics
 
 //MAP
 // // 
