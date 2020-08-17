@@ -92,7 +92,7 @@ tr {
 /* Fixtures */
 
 .fixtures {
-  max-height: 100vh;
+  height: 100vh;
   border-right: 2px solid black;
 }
 
@@ -141,7 +141,7 @@ tr {
 }
 
 .match-info .timeline {
-  height: 100%;
+  height: 100vh;
 }
 
 .match-info .timeline .period-events {

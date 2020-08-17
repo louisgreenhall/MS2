@@ -1,4 +1,6 @@
 // let apiKeyV2 = "rqz7xyyqush2cn5m838nffdy";
+// let 2ndApiKeyV2 = "8rq4qb4y9wpvm8czed2j7fz9"
+// le googleMapsApiKey = "AIzaSyDWYUEHSzOcPWpL6lJq9T_CilOpqRs7c2w"
 
 $(() => {
     var abbreviations = {
@@ -22,7 +24,9 @@ $(() => {
         "Western Bulldogs": "BUL"
     };
 
-
+    const teamInfo = {
+        matches: [],
+    }
 
     // collapse button functions
     $(".buttonExpanded").on("click", () => {
@@ -44,8 +48,7 @@ $(() => {
     }
 
 
-
-    let standingsUrl = "https://corsaway.herokuapp.com/proxy?url=https://api.sportradar.com/australianrules/trial/v2/en/seasons/sr:season:72434/standings.json?api_key=rqz7xyyqush2cn5m838nffdy";
+    let standingsUrl = "https://corsaway.herokuapp.com/proxy?url=https://api.sportradar.com/australianrules/trial/v2/en/seasons/sr:season:72434/standings.json?api_key=8rq4qb4y9wpvm8czed2j7fz9";
     fetch(standingsUrl)
         .then(response => {
             return response.json();
@@ -70,7 +73,6 @@ $(() => {
                                      <td>
                                          <a href="#" class="team" competitorId="${team.competitor_standing.competitor.id}">${team.competitor_standing.competitor.name}</a>
                                      </td>
-                                     
                                      <td>${team.competitor_standing.played}</td>
                                      <td>${team.competitor_standing.win}</td>
                                      <td>${team.competitor_standing.loss}</td>
@@ -82,7 +84,6 @@ $(() => {
 
     $("body").on("click", ".team", function (event) {
 
-
         if (!$('.ladder table').hasClass("collapse")) {
             collapse();
         } // If ladder is not collapsed, clicking team name will auto collapse 
@@ -93,7 +94,7 @@ $(() => {
             target = $(event.target).closest("a");
         }
 
-        var row = $(event.target).closest("tr");
+        let row = $(event.target).closest("tr");
         row.addClass($(row).attr("abbreviation"));
 
 
@@ -102,13 +103,15 @@ $(() => {
 
             let matches = filterMatchesByTeam(json, id);
 
+
+            teamInfo.matches = matches;
+
             $(".matches").html(""); //clearing in case team fixtures already loaded.
 
             for (let i = 0; i < matches.length; i++) {
 
                 let match = matches[i];
                 let matchId = match.sport_event.id;
-
 
                 // add list element to matches list with matchId attribute that can be used later once link clicked.
                 $(".matches").append(`<li style="padding-left:10px;"> <a href="#match-info" class="match" matchId="${matchId}">${match.sport_event.sport_event_context.stage.round} - ${match.sport_event.competitors[0].abbreviation} vs ${match.sport_event.competitors[1].abbreviation}</a></li>`)
@@ -122,14 +125,7 @@ $(() => {
                 populateMatchTimeline(json);
                 populateMatchStats(json);
             });
-
-            console.log(latestMatch);
-
-
-
-
         });
-
     })
 
     function getStatisticsHtml(stats) {
@@ -175,8 +171,6 @@ $(() => {
             <td>Tackles</td>
             <td>${stats.tackles}</td>
         </tr>
-
-    
 </table>`;
     }
 
@@ -196,42 +190,58 @@ $(() => {
             if (isMatchCompleted(currentMatch)) {
                 completeMatches.push(currentMatch)
             };
-
         }
-
         return completeMatches.pop();
     };
-
 
 
     $("body").on("click", ".match", function (event) {
 
         let id = $(event.target).attr("matchId"); // store matchId attribute of clicked element 
 
-        fetchMatchTimeline(id).then(function (json) {
-            populateMatchTimeline(json);
-            populateMatchStats(json);
+
+        const match = teamInfo.matches.find(function (m) {
+            return m.sport_event.id == id;
         });
 
-        if (!isMatchCompleted()) {
-            fetchMatchProbabilities(matchId)
-        }
+        console.log(match);
 
+        if (isMatchCompleted(match)) {
+            fetchMatchTimeline(id).then(function (matchTimeline) {
+
+                populateMatchStats(matchTimeline);
+                populateMatchTimeline(matchTimeline);
+            });
+
+        } else {
+            fetchMatchProbabilities(id).then(function (probs) {
+                $(".homeStats").html("");
+                $(".awayStats").html("");
+                $(".homeDisplayScore").html("");
+                $(".awayDisplayScore").html("");
+
+                $(".matchResultTitle").text(`Round ${latestMatch.sport_event.sport_event_context.stage.round} of ${latestMatch.sport_event.sport_event_context.season.name}`)
+                $(".homeStats").append(`Win Probability: ${probs.probabilities.markets[0].outcomes[0].probability}%`);
+                $(".awayStats").append(`Win Probability: ${probs.probabilities.markets[0].outcomes[1].probability}%`);
+
+                $(".homeTeam .team-image").attr("src", `assets/imgs/${abbreviations[match.sport_event.competitors[0].name]}.png`);
+                $(".homeTeam .team-abbr").text(abbreviations[match.sport_event.competitors[0].name]);
+
+                $(".awayTeam .team-image").attr("src", `assets/imgs/${abbreviations[match.sport_event.competitors[1].name]}.png`);
+                $(".awayTeam .team-abbr").text(abbreviations[match.sport_event.competitors[1].name]);
+            })
+
+        }
     });
+
+
 
     $(".period-selector").on("click", function (event) {
         let id = $(event.target).attr("period");
         console.log(id);
         $(".period").hide();
-
         $(`.${id}`).show();
-
-
-
     })
-
-
-
 
 
     function populateMatchStats(latestMatch) {
@@ -240,31 +250,26 @@ $(() => {
         // want to show the match when I find the latest match.
 
 
-        
-        $(".homeTeam").html("");
-        $(".awayTeam").html("");
+
         $(".homeDisplayScore").html("");
         $(".awayDisplayScore").html("");
 
-
         $(".matchResultTitle").text(`Round ${latestMatch.sport_event.sport_event_context.stage.round} of ${latestMatch.sport_event.sport_event_context.season.name}`)
 
-        $(".homeTeam").append(`<img src="assets/imgs/${abbreviations[latestMatch.sport_event.competitors[0].name]}.png">
-            ${abbreviations[latestMatch.sport_event.competitors[0].name]}`)
-        $(".awayTeam").append(`<img src="assets/imgs/${abbreviations[latestMatch.sport_event.competitors[1].name]}.png">
-            ${abbreviations[latestMatch.sport_event.competitors[1].name]}`)
+        $(".homeTeam .team-image").attr("src", `assets/imgs/${abbreviations[latestMatch.sport_event.competitors[0].name]}.png`);
+        $(".homeTeam .team-abbr").text(abbreviations[latestMatch.sport_event.competitors[0].name]);
+
+        $(".awayTeam .team-image").attr("src", `assets/imgs/${abbreviations[latestMatch.sport_event.competitors[1].name]}.png`);
+        $(".awayTeam .team-abbr").text(abbreviations[latestMatch.sport_event.competitors[1].name]);
 
         $(".homeDisplayScore").append(`${latestMatch.sport_event_status.home_display_score}`)
         $(".awayDisplayScore").append(`${latestMatch.sport_event_status.away_display_score}`)
 
-
         $(".homeStats").html(getStatisticsHtml(latestMatch.statistics.competitors[1].statistics));
         $(".awayStats").html(getStatisticsHtml(latestMatch.statistics.competitors[0].statistics));
-
     }
 
     function populateMatchTimeline(json) {
-
 
         let i = 0;
         let currentPeriod = 1;
@@ -281,9 +286,6 @@ $(() => {
                 teamType = timelineEvent.team;
             }
 
-
-
-
             // using a switch instead of if/else statements because there is a defined number of options available for timeline event types 
             switch (timelineEvent.type) {
                 case "match_started":
@@ -292,7 +294,6 @@ $(() => {
                 case "period_start":
                     console.log("period_start");
                     console.log(currentPeriod);
-
 
                     break;
                 case "score_change":
@@ -317,9 +318,7 @@ $(() => {
                     console.log("match_ended")
                     break;
             }
-
             i++;
-
         }
 
     }
@@ -337,7 +336,6 @@ $(() => {
                 matches.push(match);
             }
         }
-
         return matches;
     }
 
@@ -345,32 +343,30 @@ $(() => {
 
     function fetchSeasonDetails(id) {
 
-        return fetch(`https://corsaway.herokuapp.com/proxy?url=https://api.sportradar.com/australianrules/trial/v2/en/seasons/${id}/summaries.json?api_key=rqz7xyyqush2cn5m838nffdy`)
+        return fetch(`https://corsaway.herokuapp.com/proxy?url=https://api.sportradar.com/australianrules/trial/v2/en/seasons/${id}/summaries.json?api_key=8rq4qb4y9wpvm8czed2j7fz9`)
             .then(function (response) {
                 return response.json();
             });
-
     }
 
     function fetchMatchTimeline(matchId) {
-        let timelineUrl = `https://corsaway.herokuapp.com/proxy?url=https://api.sportradar.com/australianrules/trial/v2/en/match/${matchId}/timeline.json?api_key=rqz7xyyqush2cn5m838nffdy`
+        let timelineUrl = `https://corsaway.herokuapp.com/proxy?url=https://api.sportradar.com/australianrules/trial/v2/en/match/${matchId}/timeline.json?api_key=8rq4qb4y9wpvm8czed2j7fz9`
         return fetch(timelineUrl)
             .then(function (response) {
                 return response.json();
             });
     }
 
-    function fetchMatchProbabilities(matchId){
-        let probUrl = `https://corsaway.herokuapp.com/proxy?url=https://api.sportradar.com/australianrules/trial/v2/en/matches/${matchId}/probabilities.json?api_key=rqz7xyyqush2cn5m838nffdy`
+    function fetchMatchProbabilities(matchId) {
+        let probUrl = `https://corsaway.herokuapp.com/proxy?url=https://api.sportradar.com/australianrules/trial/v2/en/matches/${matchId}/probabilities.json?api_key=8rq4qb4y9wpvm8czed2j7fz9`
         return fetch(probUrl)
-        .then (function (response) {
-            return response.json();
-        });
+            .then(function (response) {
+                return response.json();
+            });
     }
-
-
-
 });
+
+ let gMapsUrl = `https://maps.googleapis.com/maps/api/js?key=AIzaSyDWYUEHSzOcPWpL6lJq9T_CilOpqRs7c2w&callback=initMap`;
 
 
 //MAP
