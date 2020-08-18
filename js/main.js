@@ -3,7 +3,7 @@
 // le googleMapsApiKey = "AIzaSyDWYUEHSzOcPWpL6lJq9T_CilOpqRs7c2w"
 
 $(() => {
-    var abbreviations = {
+    const abbreviations = {
         "Adelaide Crows": "ADE",
         "Brisbane Lions": "BRI",
         "Carlton Blues": "CBL",
@@ -164,7 +164,7 @@ $(() => {
             <td>${stats.marks}</td>
         </tr>
         <tr>
-            <td>Marks Inside 50s</td>
+            <td>Marks In 50s</td>
             <td>${stats.marks_inside_50s}</td>
         </tr>
         <tr>
@@ -220,7 +220,8 @@ $(() => {
                 $(".homeDisplayScore").html("");
                 $(".awayDisplayScore").html("");
 
-                $(".matchResultTitle").text(`Round ${latestMatch.sport_event.sport_event_context.stage.round} of ${latestMatch.sport_event.sport_event_context.season.name}`)
+                $(".matchResultTitle").text(`Round ${match.sport_event.sport_event_context.stage.round} of ${match.sport_event.sport_event_context.season.name}`)
+                // add a date here
                 $(".homeStats").append(`Win Probability: ${probs.probabilities.markets[0].outcomes[0].probability}%`);
                 $(".awayStats").append(`Win Probability: ${probs.probabilities.markets[0].outcomes[1].probability}%`);
 
@@ -230,7 +231,7 @@ $(() => {
                 $(".awayTeam .team-image").attr("src", `assets/imgs/${abbreviations[match.sport_event.competitors[1].name]}.png`);
                 $(".awayTeam .team-abbr").text(abbreviations[match.sport_event.competitors[1].name]);
             })
-
+            $(".vsStats").hide()
         }
     });
 
@@ -249,7 +250,7 @@ $(() => {
         $(`[matchId='${latestMatch.sport_event.id}']`).addClass("active");
         // want to show the match when I find the latest match.
 
-
+        $(".vsStats").show()
 
         $(".homeDisplayScore").html("");
         $(".awayDisplayScore").html("");
@@ -265,9 +266,47 @@ $(() => {
         $(".homeDisplayScore").append(`${latestMatch.sport_event_status.home_display_score}`)
         $(".awayDisplayScore").append(`${latestMatch.sport_event_status.away_display_score}`)
 
-        $(".homeStats").html(getStatisticsHtml(latestMatch.statistics.competitors[1].statistics));
-        $(".awayStats").html(getStatisticsHtml(latestMatch.statistics.competitors[0].statistics));
+
+        const homeStats = latestMatch.statistics.competitors[1].statistics;
+        const awayStats = latestMatch.statistics.competitors[0].statistics;
+
+        $(".homeStats").html(getStatisticsHtml(homeStats));
+        $(".awayStats").html(getStatisticsHtml(awayStats));
+
+        calculateStatWinner("behinds", "Behinds", homeStats, awayStats);
+        calculateStatWinner("disposals", "Disposals", homeStats, awayStats);
+        calculateStatWinner("free_kicks", "FreeKicks", homeStats, awayStats);
+        calculateStatWinner("goals", "Goals", homeStats, awayStats);
+        calculateStatWinner("handballs", "Handballs", homeStats, awayStats);
+        calculateStatWinner("hitouts", "Hitouts", homeStats, awayStats);
+        calculateStatWinner("kicks", "Kicks", homeStats, awayStats);
+        calculateStatWinner("marks", "Marks", homeStats, awayStats);
+        calculateStatWinner("marks_inside_50s", "MarksInside", homeStats, awayStats);
+        calculateStatWinner("tackles", "Tackles", homeStats, awayStats);
+
     }
+
+    function calculateStatWinner(statName, className, homeStats, awayStats) {
+
+        if (homeStats[statName] < awayStats[statName]) {
+
+            $(`.home${className}`).removeClass("green").removeClass("amber").addClass("red");
+            $(`.away${className}`).removeClass("red").removeClass("amber").addClass("green");
+
+        } else if (homeStats[statName] > awayStats[statName]) {
+
+            $(`.home${className}`).removeClass("red").removeClass("amber").addClass("green");
+            $(`.away${className}`).removeClass("green").removeClass("amber").addClass("red");
+
+        } else {
+
+            $(`.home${className}`).removeClass("red").removeClass("green").addClass("amber");
+            $(`.away${className}`).removeClass("green").removeClass("red").addClass("amber");
+
+        }
+
+    }
+
 
     function populateMatchTimeline(json) {
 
@@ -366,11 +405,11 @@ $(() => {
     }
 });
 
- let gMapsUrl = `https://maps.googleapis.com/maps/api/js?key=AIzaSyDWYUEHSzOcPWpL6lJq9T_CilOpqRs7c2w&callback=initMap`;
+let gMapsUrl = `https://maps.googleapis.com/maps/api/js?key=AIzaSyDWYUEHSzOcPWpL6lJq9T_CilOpqRs7c2w&callback=initMap`;
 
 
 //MAP
-// // 
+//
 // match.sport_event.venue.capacity
 // match.sport_event.venue.city_name
 // match.sport_event.venue.map_coordinates
