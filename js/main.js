@@ -126,7 +126,11 @@ $(() => {
             $(".fixtures").show();
 
             let latestMatch = getLatestMatchWithStatistics(matches);
-            moveMapToLocation(latestMatch.sport_event.venue.map_coordinates)
+
+            updateVenue(latestMatch)
+
+
+
             fetchMatchTimeline(latestMatch.sport_event.id).then(function (json) {
                 populateMatchTimeline(json);
                 populateMatchStats(json);
@@ -210,7 +214,7 @@ $(() => {
             return m.sport_event.id == id;
         });
 
-        moveMapToLocation(match.sport_event.venue.map_coordinates)
+        updateVenue(match)
 
         if (isMatchCompleted(match)) {
             fetchMatchTimeline(id).then(function (matchTimeline) {
@@ -270,7 +274,17 @@ $(() => {
         }
     }
 
-    function moveMapToLocation(latLng){
+    function updateVenue(match) {
+        let latLng = match.sport_event.venue.map_coordinates;
+
+        $(".venueName").html(`Name: ${match.sport_event.venue.name}`)
+        $(".venueCapacity").html(`Capacity: ${match.sport_event.venue.capacity}`)
+
+        fetchGeocodeData(latLng).then(function (json) {
+
+            $(".venueAddress").html(`Address: ${json.results[0].formatted_address}`);
+        })
+
         const latLngSplit = latLng.split(',');
         let lat = Number.parseFloat(latLngSplit[0]);
         let lng = Number.parseFloat(latLngSplit[1]);
@@ -441,6 +455,14 @@ $(() => {
                 return response.json();
             });
     }
+
+    function fetchGeocodeData(latLng) {
+        let geocodeUrl = `https://maps.googleapis.com/maps/api/geocode/json?&key=AIzaSyDWYUEHSzOcPWpL6lJq9T_CilOpqRs7c2w&latlng=${latLng}`
+        return fetch(geocodeUrl)
+            .then(function (response) {
+                return response.json();
+            });
+    }
 });
 
 
@@ -451,4 +473,3 @@ $(() => {
 // match.sport_event.venue.city_name
 // match.sport_event.venue.map_coordinates
 // match.sport_event.venue.name
-
