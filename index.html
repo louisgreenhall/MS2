@@ -10,6 +10,7 @@
         integrity="sha256-h20CPZ0QyXlBuAw7A+KluUYx/3pK+c7lYEpqLTlxjYQ=" crossorigin="anonymous" />
     <link rel="stylesheet" href="assets/style.css">
     <link rel="stylesheet" href="assets/gradients.css">
+    <link rel="stylesheet" href="assets/venue.css">
 
     <title>Aussie Rules</title>
 </head>
@@ -47,7 +48,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="timelineContainer scrollable col s4">
-                            <h5 class="center-align" >Match Timeline</h5>
+                            <h5 class="center-align">Match Timeline</h5>
                             <div class="timelineError center-align">Timeline not available for fututure matches.</div>
                             <div class="row">
                                 <div class="col s3"><button class="period-selector btn-small" period="period1"
@@ -150,7 +151,7 @@
                                                 <h6 class="awayDisplayScore center-align">0</h6>
                                             </div>
                                         </div>
-                                      
+
                                     </div>
                                 </div>
                                 <div class="row">
@@ -159,43 +160,43 @@
                                     </div>
                                     <div class="vsStats col s2">
                                         <table>
-                                            <tr> 
+                                            <tr>
                                                 <td class="homeBehinds"></td>
                                                 <td class="awayBehinds"></td>
                                             </tr>
-                                            <tr> 
+                                            <tr>
                                                 <td class="homeDisposals"></td>
                                                 <td class="awayDisposals"></td>
                                             </tr>
-                                            <tr> 
+                                            <tr>
                                                 <td class="homeFreeKicks"></td>
                                                 <td class="awayFreeKicks"></td>
                                             </tr>
-                                            <tr> 
+                                            <tr>
                                                 <td class="homeGoals"></td>
                                                 <td class="awayGoals"></td>
                                             </tr>
-                                            <tr> 
+                                            <tr>
                                                 <td class="homeHandballs"></td>
                                                 <td class="awayHandballs"></td>
                                             </tr>
-                                            <tr> 
+                                            <tr>
                                                 <td class="homeHitouts"></td>
                                                 <td class="awayHitouts"></td>
                                             </tr>
-                                            <tr> 
+                                            <tr>
                                                 <td class="homeKicks"></td>
                                                 <td class="awayKicks"></td>
                                             </tr>
-                                            <tr> 
+                                            <tr>
                                                 <td class="homeMarks"></td>
                                                 <td class="awayMarks"></td>
                                             </tr>
-                                            <tr> 
+                                            <tr>
                                                 <td class="homeMarksInside"></td>
                                                 <td class="awayMarksInside"></td>
                                             </tr>
-                                            <tr> 
+                                            <tr>
                                                 <td class="homeTackles"></td>
                                                 <td class="awayTackles"></td>
                                             </tr>
@@ -204,11 +205,11 @@
                                     <div class="awayStats center-align col s5">
                                     </div>
                                 </div>
-                                
+
                             </div>
                             <div class="row">
                                 <div class="col s7">
-                                    <div class="venue">Venue</div>
+                                    <div id="venue"></div>
                                 </div>
                                 <div class="col s5">
                                     <div class="venueDetails">Venue Details</div>
@@ -243,8 +244,15 @@
 
 
     <script src="https://code.jquery.com/jquery-latest.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment.min.js" integrity="sha512-rmZcZsyhe0/MAjquhTgiUcb4d9knaFc7b5xAfju483gbEXTkeJRUMIPk6s3ySZMYUHEcjKbjLjyddGWMrNEvZg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment.min.js"
+        integrity="sha512-rmZcZsyhe0/MAjquhTgiUcb4d9knaFc7b5xAfju483gbEXTkeJRUMIPk6s3ySZMYUHEcjKbjLjyddGWMrNEvZg=="
+        crossorigin="anonymous"></script>
+    <script src="js/venue.js"></script>
     <script src="js/main.js"></script>
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDWYUEHSzOcPWpL6lJq9T_CilOpqRs7c2w&callback=initMap">
+    </script>
+
 </body>
 
 </html>

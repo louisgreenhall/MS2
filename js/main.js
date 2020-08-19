@@ -126,7 +126,7 @@ $(() => {
             $(".fixtures").show();
 
             let latestMatch = getLatestMatchWithStatistics(matches);
-
+            moveMapToLocation(latestMatch.sport_event.venue.map_coordinates)
             fetchMatchTimeline(latestMatch.sport_event.id).then(function (json) {
                 populateMatchTimeline(json);
                 populateMatchStats(json);
@@ -210,7 +210,7 @@ $(() => {
             return m.sport_event.id == id;
         });
 
-        console.log(match);
+        moveMapToLocation(match.sport_event.venue.map_coordinates)
 
         if (isMatchCompleted(match)) {
             fetchMatchTimeline(id).then(function (matchTimeline) {
@@ -268,6 +268,19 @@ $(() => {
                 return key;
             }
         }
+    }
+
+    function moveMapToLocation(latLng){
+        const latLngSplit = latLng.split(',');
+        let lat = Number.parseFloat(latLngSplit[0]);
+        let lng = Number.parseFloat(latLngSplit[1]);
+        console.log(latLng)
+        map.setCenter({
+            lat: lat,
+            lng: lng
+        })
+
+
     }
 
     function populateMatchStats(latestMatch) {
@@ -430,7 +443,6 @@ $(() => {
     }
 });
 
-let gMapsUrl = `https://maps.googleapis.com/maps/api/js?key=AIzaSyDWYUEHSzOcPWpL6lJq9T_CilOpqRs7c2w&callback=initMap`;
 
 
 //MAP
@@ -439,3 +451,4 @@ let gMapsUrl = `https://maps.googleapis.com/maps/api/js?key=AIzaSyDWYUEHSzOcPWpL
 // match.sport_event.venue.city_name
 // match.sport_event.venue.map_coordinates
 // match.sport_event.venue.name
+
