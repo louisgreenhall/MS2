@@ -88,3 +88,15 @@
     background: rgb(0, 34, 68);
     background: linear-gradient(90deg, rgba(0, 34, 68, 1) 25%, rgba(253, 200, 47, 1) 50%, rgba(189, 56, 38, 1) 75%);
   }
+
+
+  #gradient {
+    margin: 0;
+    padding-top: 5px;
+    text-align: center;
+    color: white;
+  }
+
+  #gradient h6 {
+    background: rgba(0,0,0,0.3);
+  }

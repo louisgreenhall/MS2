@@ -2,8 +2,40 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
 /* font-family: 'Montserrat', sans-serif; */
+html,
 body {
   font-family: 'montserrat', sans-serif;
+}
+
+@media(min-width: 768px) {
+
+  html,
+  body {
+    overflow-y: hidden;
+  }
+
+  /* https://css-tricks.com/custom-scrollbars-in-webkit/ found on this site ways to easily customise scrollbar */
+
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 139, 0.5);
+  }
+
+  .scrollable {
+    max-height: 100vh;
+    height: auto;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
 }
 
 /* TEAM LADDER CSS*/
@@ -24,6 +56,38 @@ body {
 .standings tr {
   height: 25px;
 }
+
+.standings tr:nth-child(8) {
+  border-bottom: solid 2px #F44336;
+}
+
+.standings tr:nth-child(1),
+.standings tr:nth-child(2),
+.standings tr:nth-child(3),
+.standings tr:nth-child(4) {
+  border-left: solid 8px darkblue;
+}
+
+.standings tr:nth-child(5),
+.standings tr:nth-child(6),
+.standings tr:nth-child(7),
+.standings tr:nth-child(8) {
+  border-left: solid 8px lightblue;
+}
+
+.standings tr:nth-child(9),
+.standings tr:nth-child(10),
+.standings tr:nth-child(11),
+.standings tr:nth-child(12),
+.standings tr:nth-child(13),
+.standings tr:nth-child(14),
+.standings tr:nth-child(15),
+.standings tr:nth-child(16),
+.standings tr:nth-child(17),
+.standings tr:nth-child(18) {
+  border-left: solid 8px #fff;
+}
+
 
 .ladder tr td,
 .ladder tr th {
@@ -65,6 +129,13 @@ table td:nth-child(3) {
   display: none;
 }
 
+button,
+.btn-small {
+  background-color: darkblue;
+  border-color: darkblue;
+  color: white;
+}
+
 .toggleCollapse {
   position: absolute;
   top: 0;
@@ -94,6 +165,7 @@ tr {
 .fixtures {
   height: 100vh;
   border-right: 2px solid black;
+  display: none;
 }
 
 .fixtures li {
@@ -102,7 +174,7 @@ tr {
 
 /* MATCH INFO CSS*/
 .match-info {
-  /* display: none; */
+  display: none;
 }
 
 .period {
@@ -139,9 +211,13 @@ tr {
 
 
 }
+.timelineError {
+  display: none;
+}
 
 .match-info .timeline {
   height: 100vh;
+  padding-bottom: 20px;
 }
 
 .match-info .timeline .period-events {
@@ -183,6 +259,7 @@ tr {
 
 .match-info .timeline .timeline-event .event-content {
   border: 1px solid black;
+  border-radius: 3%;
   width: 40%;
   height: 20px;
   position: absolute;
@@ -190,11 +267,11 @@ tr {
 }
 
 .match-info .timeline .timeline-event.home .event-content {
-  background: red;
+  background-color: #F44336
 }
 
 .match-info .timeline .timeline-event.away .event-content {
-  background: green;
+  background-color: #4CAF50;
   left: calc(50% + 10%)
 }
 
@@ -203,8 +280,7 @@ tr {
   margin-right: 5px;
   width: 40px;
   text-align: center;
-  padding;
-  0 0;
+  padding:  0 0;
 }
 
 .timeline .row .s3 {
@@ -217,15 +293,18 @@ tr {
 
 /* Match Results */
 
-.homeTeam, .awayTeam {
+.homeTeam,
+.awayTeam {
   text-align: center;
 }
 
-.homeDisplayScore, .awayDisplayScore {
+.homeDisplayScore,
+.awayDisplayScore {
   text-align: center;
 }
 
-.homeTeam img, .awayTeam img {
+.homeTeam img,
+.awayTeam img {
   height: auto;
   max-height: 40px;
   max-width: 40px;
@@ -234,13 +313,17 @@ tr {
   margin-top: 30px;
 }
 
-.homeStats tr, .homeStats tr td, .awayStats tr, .awayStats tr td {
+.homeStats tr,
+.homeStats tr td,
+.awayStats tr,
+.awayStats tr td {
   height: 20px !important;
-    max-height: 20px !important;
+  max-height: 20px !important;
   padding: 0;
 }
 
-.row .venue, .venueDetails {
+.row .venue,
+.venueDetails {
   border: 1px solid black;
 }
 
@@ -250,46 +333,39 @@ tr {
   height: 220px;
 }
 
-.vsStats tr, .vsStats tr td {
+.vsStats tr,
+.vsStats tr td {
   height: 20px !important;
-    max-height: 20px !important;
+  max-height: 20px !important;
   padding: 0;
-  
+
 }
+
 .vsStats tr td {
   border: 3px solid white;
   border-radius: 6px;
+  max-width: 40px;
+  width: 40px;
+  font-size: 0.8rem;
+  text-align: center;
+  color: white;
 }
 
-.red {
+/* .red {
   background-color: red;
 }
 
 .green {
   background-color: green;
-}
+} */
 
 .amber {
   background-color: #FFBF00;
 }
 
-/* homeBehinds
-awayBehinds
-homeDisplosals
-awayDisplosals
-homeFreeKicks
-awayFreeKicks
-homeGoals
-awayGoals
-homeHandballs
-awayHandballs
-homeHitouts
-awayHitouts
-homeKicks
-awayKicks
-homeMarks
-awayMarks
-homeMarksInside
-awayMarksInside
-homeTackles
-awayTackles */
+
+
+.team-abbr, .matchResultTitle p {
+  margin: 0;
+}
+

@@ -95,7 +95,12 @@ $(() => {
         }
 
         let row = $(event.target).closest("tr");
-        row.addClass($(row).attr("abbreviation"));
+        const abbr = $(row).attr("abbreviation");
+        $("#gradient").removeClass().addClass(abbr);
+
+        const teamName = getTeamNameFromAbbreviation(abbr);
+
+        $("#gradient").html(`<h6>${teamName}</h6>`)
 
 
         let id = $(target).attr("competitorId"); // store attribute of clicked competitorId.
@@ -117,7 +122,8 @@ $(() => {
                 $(".matches").append(`<li style="padding-left:10px;"> <a href="#match-info" class="match" matchId="${matchId}">${match.sport_event.sport_event_context.stage.round} - ${match.sport_event.competitors[0].abbreviation} vs ${match.sport_event.competitors[1].abbreviation}</a></li>`)
             }
 
-            $("#match-info").show()
+            $(".match-info").show();
+            $(".fixtures").show();
 
             let latestMatch = getLatestMatchWithStatistics(matches);
 
@@ -209,22 +215,33 @@ $(() => {
         if (isMatchCompleted(match)) {
             fetchMatchTimeline(id).then(function (matchTimeline) {
 
+                $(".timelineContainer button").show();
+                $(".timeline").children().show();
+                $(".timelineError").hide();
+
                 populateMatchStats(matchTimeline);
                 populateMatchTimeline(matchTimeline);
             });
 
         } else {
+            $(".timelineContainer button").hide();
+            $(".timeline").children().hide();
+            $(".timelineError").show();
+
             fetchMatchProbabilities(id).then(function (probs) {
                 $(".homeStats").html("");
                 $(".awayStats").html("");
                 $(".homeDisplayScore").html("");
                 $(".awayDisplayScore").html("");
 
-                $(".matchResultTitle").text(`Round ${match.sport_event.sport_event_context.stage.round} of ${match.sport_event.sport_event_context.season.name}`)
-                // add a date here
-                $(".homeStats").append(`Win Probability: ${probs.probabilities.markets[0].outcomes[0].probability}%`);
-                $(".awayStats").append(`Win Probability: ${probs.probabilities.markets[0].outcomes[1].probability}%`);
 
+
+                $(".matchResultTitle").text(`Round ${match.sport_event.sport_event_context.stage.round} of ${match.sport_event.sport_event_context.season.name}`)
+                $(".matchResultTitle").append(`<p>${moment(match.sport_event.scheduled).format("dddd, MMMM Do YYYY, h:mm:ss a")}</p>`);
+                if (probs.probabilities.markets.length > 0) {
+                    $(".homeStats").append(`Win Probability: ${probs.probabilities.markets[0].outcomes[0].probability}%`);
+                    $(".awayStats").append(`Win Probability: ${probs.probabilities.markets[0].outcomes[1].probability}%`);
+                } //Stops error of future matches not having win/loss probabilities yet
                 $(".homeTeam .team-image").attr("src", `assets/imgs/${abbreviations[match.sport_event.competitors[0].name]}.png`);
                 $(".homeTeam .team-abbr").text(abbreviations[match.sport_event.competitors[0].name]);
 
@@ -245,6 +262,14 @@ $(() => {
     })
 
 
+    function getTeamNameFromAbbreviation(abbr) {
+        for (var key of Object.keys(abbreviations)) {
+            if (abbreviations[key] == abbr) {
+                return key;
+            }
+        }
+    }
+
     function populateMatchStats(latestMatch) {
 
         $(`[matchId='${latestMatch.sport_event.id}']`).addClass("active");
@@ -256,7 +281,7 @@ $(() => {
         $(".awayDisplayScore").html("");
 
         $(".matchResultTitle").text(`Round ${latestMatch.sport_event.sport_event_context.stage.round} of ${latestMatch.sport_event.sport_event_context.season.name}`)
-
+        $(".matchResultTitle").append(`<p>${moment(latestMatch.sport_event.scheduled).format("dddd, MMMM Do YYYY, h:mm:ss a")}</p>`);
         $(".homeTeam .team-image").attr("src", `assets/imgs/${abbreviations[latestMatch.sport_event.competitors[0].name]}.png`);
         $(".homeTeam .team-abbr").text(abbreviations[latestMatch.sport_event.competitors[0].name]);
 
@@ -290,18 +315,18 @@ $(() => {
 
         if (homeStats[statName] < awayStats[statName]) {
 
-            $(`.home${className}`).removeClass("green").removeClass("amber").addClass("red");
-            $(`.away${className}`).removeClass("red").removeClass("amber").addClass("green");
+            $(`.home${className}`).removeClass("green").removeClass("amber").addClass("red").text("");
+            $(`.away${className}`).removeClass("red").removeClass("amber").addClass("green").text(`+${awayStats[statName] - homeStats[statName]}`); // winner
 
         } else if (homeStats[statName] > awayStats[statName]) {
 
-            $(`.home${className}`).removeClass("red").removeClass("amber").addClass("green");
-            $(`.away${className}`).removeClass("green").removeClass("amber").addClass("red");
+            $(`.home${className}`).removeClass("red").removeClass("amber").addClass("green").text(`+${homeStats[statName] - awayStats[statName]}`); // winner
+            $(`.away${className}`).removeClass("green").removeClass("amber").addClass("red").text("");
 
         } else {
 
-            $(`.home${className}`).removeClass("red").removeClass("green").addClass("amber");
-            $(`.away${className}`).removeClass("green").removeClass("red").addClass("amber");
+            $(`.home${className}`).removeClass("red").removeClass("green").addClass("amber").text("");
+            $(`.away${className}`).removeClass("green").removeClass("red").addClass("amber").text("");
 
         }
 
