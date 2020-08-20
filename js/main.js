@@ -83,6 +83,7 @@ $(() => {
         });
 
     $("body").on("click", ".team", function (event) {
+        $(".welcome").hide()
 
         if (!$('.ladder table').hasClass("collapse")) {
             collapse();
@@ -97,11 +98,11 @@ $(() => {
         let row = $(event.target).closest("tr");
         const abbr = $(row).attr("abbreviation");
         $("#gradient").removeClass().addClass(abbr);
-
+        $("#gradientBottom").removeClass().addClass(abbr);
         const teamName = getTeamNameFromAbbreviation(abbr);
 
-        $("#gradient").html(`<h6>${teamName}</h6>`)
-
+        $("#gradient h6").html(teamName)
+        $(".timelineError").hide();
 
         let id = $(target).attr("competitorId"); // store attribute of clicked competitorId.
         fetchSeasonDetails("sr:season:72434").then(function (json) {
@@ -124,6 +125,7 @@ $(() => {
 
             $(".match-info").show();
             $(".fixtures").show();
+
 
             let latestMatch = getLatestMatchWithStatistics(matches);
 
@@ -388,7 +390,7 @@ $(() => {
 
                     break;
                 case "score_change":
-                    console.log("score_change")
+                    console.log("score_change", timelineEvent)
 
                     $(`.timeline .period${currentPeriod} .period-events`).append(`<div class="timeline-event ${timelineEvent.team}">
                                                                 <div class="event-badge">${timelineEvent.match_time}</div>

@@ -13,6 +13,9 @@ body {
   body {
     overflow-y: hidden;
   }
+  #grad {
+    opacity: 0.7;
+  }
 
   /* https://css-tricks.com/custom-scrollbars-in-webkit/ found on this site ways to easily customise scrollbar */
 
@@ -36,6 +39,12 @@ body {
     overflow-y: auto;
     overflow-x: hidden;
   }
+
+  .logo {
+    margin: auto;
+    padding-left: 200px;
+    padding-top: 150px;
+  }
 }
 
 /* TEAM LADDER CSS*/
@@ -43,6 +52,9 @@ body {
 .container {
   width: 100%;
   max-width: initial;
+  padding-top: 40px; 
+  padding-bottom: 12px; 
+  box-sizing: border-box;
 }
 
 .container .row {
@@ -51,6 +63,9 @@ body {
 
 .container .row .col {
   padding: 0;
+}
+.standings, .fixtures {
+  font-size: 0.8rem;
 }
 
 .standings tr {
@@ -100,9 +115,23 @@ body {
   text-align: center;
 }
 
+button.ladderButton {
+  background: transparent;
+  border: solid 1px black;
+  color: inherit;
+  font-weight: 500;
+}
+
+div button.ladderButton:hover, div button.ladderButton:focus {
+  background: transparent;
+  opacity: 0.9;
+  color: rgb(255, 255, 255);
+  border: solid 2px white;
+}
+
 .standings tr td img {
   height: auto;
-  max-height: 25px;
+  max-height: 21px;
   max-width: 30px;
   text-align: center;
   margin: auto;
@@ -134,6 +163,11 @@ button,
   background-color: darkblue;
   border-color: darkblue;
   color: white;
+}
+
+button.period-selector.btn-small:hover, button.period-selector:focus, button.btn-small:focus {
+  background: rgba(0, 0, 0, 0.5);
+  color: darkblue;
 }
 
 .toggleCollapse {
@@ -172,6 +206,10 @@ tr {
   height: 40px;
 }
 
+.matches .li a {
+  color: inherit;
+}
+
 /* MATCH INFO CSS*/
 .match-info {
   display: none;
@@ -179,6 +217,7 @@ tr {
 
 .period {
   display: none;
+  padding-left: 15px
 }
 
 .match-info .row {
@@ -194,6 +233,7 @@ tr {
 
 .match-info .row .col .row {
   height: auto;
+  padding-left: 20px;
 }
 
 .match-info .row .col .row .col {
@@ -201,23 +241,31 @@ tr {
   border: none;
 }
 
+.timelineContainer h5 {
+  font-size: 14px;
+}
+
+.container-match-info .row .col.timelineContainer {
+  padding: 0 5px;
+}
+
 .match-info .timeline .timeline-splitter {
   height: 100%;
   background: #333;
   width: 6px;
-  left: calc(50% - 3px);
+  left: calc(50% - 10px);
   position: absolute;
   border: 0;
 
-
+ 
 }
 .timelineError {
   display: none;
 }
 
 .match-info .timeline {
-  height: 100vh;
-  padding-bottom: 20px;
+  height: calc(90vh - 54px);
+  padding-bottom: 0px;
 }
 
 .match-info .timeline .period-events {
@@ -249,7 +297,7 @@ tr {
   border: 1px solid black;
   border-radius: 10px;
   position: absolute;
-  left: calc(50% - 10px);
+  left: calc(50% - 16px);
   padding-top: 1px;
   color: white;
   text-align: center;
@@ -260,7 +308,7 @@ tr {
 .match-info .timeline .timeline-event .event-content {
   border: 1px solid black;
   border-radius: 3%;
-  width: 40%;
+  width: 30%;
   height: 20px;
   position: absolute;
   text-align: center;
@@ -298,9 +346,14 @@ tr {
   text-align: center;
 }
 
+.vs h4 {
+  margin-top: revert;
+}
+
 .homeDisplayScore,
 .awayDisplayScore {
   text-align: center;
+  margin: 5px 0;
 }
 
 .homeTeam img,
@@ -324,7 +377,11 @@ tr {
 
 .row .venue,
 .venueDetails {
-  border: 1px solid black;
+  border-top: 1px solid black;
+  font-size: 14px;
+}
+.venueDetails p {
+  margin: 10px;
 }
 
 /* Vs Stats */
@@ -351,14 +408,6 @@ tr {
   color: white;
 }
 
-/* .red {
-  background-color: red;
-}
-
-.green {
-  background-color: green;
-} */
-
 .amber {
   background-color: #FFBF00;
 }
@@ -368,4 +417,5 @@ tr {
 .team-abbr, .matchResultTitle p {
   margin: 0;
 }
+
 
