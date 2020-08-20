@@ -13,6 +13,7 @@ body {
   body {
     overflow-y: hidden;
   }
+
   #grad {
     opacity: 0.7;
   }
@@ -52,8 +53,8 @@ body {
 .container {
   width: 100%;
   max-width: initial;
-  padding-top: 40px; 
-  padding-bottom: 12px; 
+  padding-top: 40px;
+  padding-bottom: 12px;
   box-sizing: border-box;
 }
 
@@ -64,7 +65,9 @@ body {
 .container .row .col {
   padding: 0;
 }
-.standings, .fixtures {
+
+.standings,
+.fixtures {
   font-size: 0.8rem;
 }
 
@@ -122,7 +125,8 @@ button.ladderButton {
   font-weight: 500;
 }
 
-div button.ladderButton:hover, div button.ladderButton:focus {
+div button.ladderButton:hover,
+div button.ladderButton:focus {
   background: transparent;
   opacity: 0.9;
   color: rgb(255, 255, 255);
@@ -165,7 +169,9 @@ button,
   color: white;
 }
 
-button.period-selector.btn-small:hover, button.period-selector:focus, button.btn-small:focus {
+button.period-selector.btn-small:hover,
+button.period-selector:focus,
+button.btn-small:focus {
   background: rgba(0, 0, 0, 0.5);
   color: darkblue;
 }
@@ -257,8 +263,9 @@ tr {
   position: absolute;
   border: 0;
 
- 
+
 }
+
 .timelineError {
   display: none;
 }
@@ -328,7 +335,7 @@ tr {
   margin-right: 5px;
   width: 40px;
   text-align: center;
-  padding:  0 0;
+  padding: 0 0;
 }
 
 .timeline .row .s3 {
@@ -380,6 +387,7 @@ tr {
   border-top: 1px solid black;
   font-size: 14px;
 }
+
 .venueDetails p {
   margin: 10px;
 }
@@ -414,8 +422,7 @@ tr {
 
 
 
-.team-abbr, .matchResultTitle p {
+.team-abbr,
+.matchResultTitle p {
   margin: 0;
 }
-
-

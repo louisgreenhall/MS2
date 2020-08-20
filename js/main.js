@@ -1,5 +1,6 @@
 // let apiKeyV2 = "rqz7xyyqush2cn5m838nffdy";
 // let 2ndApiKeyV2 = "8rq4qb4y9wpvm8czed2j7fz9"
+// let 3rdApiKeyV2 = "umfmpvapcrzjuhhw73mbysgh"
 // le googleMapsApiKey = "AIzaSyDWYUEHSzOcPWpL6lJq9T_CilOpqRs7c2w"
 
 $(() => {
@@ -48,7 +49,7 @@ $(() => {
     }
 
 
-    let standingsUrl = "https://corsaway.herokuapp.com/proxy?url=https://api.sportradar.com/australianrules/trial/v2/en/seasons/sr:season:72434/standings.json?api_key=8rq4qb4y9wpvm8czed2j7fz9";
+    let standingsUrl = "https://corsaway.herokuapp.com/proxy?url=https://api.sportradar.com/australianrules/trial/v2/en/seasons/sr:season:72434/standings.json?api_key=umfmpvapcrzjuhhw73mbysgh";
     fetch(standingsUrl)
         .then(response => {
             return response.json();
@@ -436,14 +437,14 @@ $(() => {
 
     function fetchSeasonDetails(id) {
 
-        return fetch(`https://corsaway.herokuapp.com/proxy?url=https://api.sportradar.com/australianrules/trial/v2/en/seasons/${id}/summaries.json?api_key=8rq4qb4y9wpvm8czed2j7fz9`)
+        return fetch(`https://corsaway.herokuapp.com/proxy?url=https://api.sportradar.com/australianrules/trial/v2/en/seasons/${id}/summaries.json?api_key=umfmpvapcrzjuhhw73mbysgh`)
             .then(function (response) {
                 return response.json();
             });
     }
 
     function fetchMatchTimeline(matchId) {
-        let timelineUrl = `https://corsaway.herokuapp.com/proxy?url=https://api.sportradar.com/australianrules/trial/v2/en/match/${matchId}/timeline.json?api_key=8rq4qb4y9wpvm8czed2j7fz9`
+        let timelineUrl = `https://corsaway.herokuapp.com/proxy?url=https://api.sportradar.com/australianrules/trial/v2/en/match/${matchId}/timeline.json?api_key=umfmpvapcrzjuhhw73mbysgh`
         return fetch(timelineUrl)
             .then(function (response) {
                 return response.json();
@@ -451,7 +452,7 @@ $(() => {
     }
 
     function fetchMatchProbabilities(matchId) {
-        let probUrl = `https://corsaway.herokuapp.com/proxy?url=https://api.sportradar.com/australianrules/trial/v2/en/matches/${matchId}/probabilities.json?api_key=8rq4qb4y9wpvm8czed2j7fz9`
+        let probUrl = `https://corsaway.herokuapp.com/proxy?url=https://api.sportradar.com/australianrules/trial/v2/en/matches/${matchId}/probabilities.json?api_key=umfmpvapcrzjuhhw73mbysgh`
         return fetch(probUrl)
             .then(function (response) {
                 return response.json();
