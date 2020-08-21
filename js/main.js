@@ -36,15 +36,15 @@ $(() => {
 
     function collapse() {
         $('.ladder table').addClass("collapse");
-        $('.ladder').removeClass("s4").addClass("s1 ladder-toggle");
-        $('.match-info').removeClass("s6").addClass("s9");
+        $('.ladder').removeClass("s4").addClass("s2 ladder-toggle");
+        $('.match-info').removeClass("s6").addClass("s8");
         $(".buttonExpanded").toggleClass("hidden");
     }
 
     function expand() {
         $('.ladder table').removeClass("collapse");
-        $('.ladder').addClass("s4").removeClass("s1 ladder-toggle");
-        $('.match-info').addClass("s6").removeClass("s9");
+        $('.ladder').addClass("s4").removeClass("s2 ladder-toggle");
+        $('.match-info').addClass("s6").removeClass("s8");
         $(".buttonExpanded").toggleClass("hidden");
     }
 
