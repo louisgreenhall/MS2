@@ -254,7 +254,7 @@ $(() => {
 
                 $(".awayTeam .team-image").attr("src", `assets/imgs/${abbreviations[match.sport_event.competitors[1].name]}.png`);
                 $(".awayTeam .team-abbr").text(abbreviations[match.sport_event.competitors[1].name]);
-            })
+            }) 
             $(".vsStats").hide()
         }
     });
@@ -299,6 +299,11 @@ $(() => {
 
 
     }
+    function getTeamByQualifier(competitors, qualifier) {
+        return competitors.find(function(c) { 
+            return c.qualifier == qualifier
+        });
+    }
 
     function populateMatchStats(latestMatch) {
 
@@ -310,20 +315,23 @@ $(() => {
         $(".homeDisplayScore").html("");
         $(".awayDisplayScore").html("");
 
+        const homeTeam = getTeamByQualifier(latestMatch.statistics.competitors, "home");
+        const awayTeam = getTeamByQualifier(latestMatch.statistics.competitors, "away");
+
         $(".matchResultTitle").text(`Round ${latestMatch.sport_event.sport_event_context.stage.round} of ${latestMatch.sport_event.sport_event_context.season.name}`)
         $(".matchResultTitle").append(`<p>${moment(latestMatch.sport_event.scheduled).format("dddd, MMMM Do YYYY, h:mm:ss a")}</p>`);
-        $(".homeTeam .team-image").attr("src", `assets/imgs/${abbreviations[latestMatch.sport_event.competitors[0].name]}.png`);
-        $(".homeTeam .team-abbr").text(abbreviations[latestMatch.sport_event.competitors[0].name]);
+        $(".homeTeam .team-image").attr("src", `assets/imgs/${abbreviations[homeTeam.name]}.png`);
+        $(".homeTeam .team-abbr").text(abbreviations[homeTeam.name]);
 
-        $(".awayTeam .team-image").attr("src", `assets/imgs/${abbreviations[latestMatch.sport_event.competitors[1].name]}.png`);
-        $(".awayTeam .team-abbr").text(abbreviations[latestMatch.sport_event.competitors[1].name]);
+        $(".awayTeam .team-image").attr("src", `assets/imgs/${abbreviations[awayTeam.name]}.png`);
+        $(".awayTeam .team-abbr").text(abbreviations[awayTeam.name]);
 
         $(".homeDisplayScore").append(`${latestMatch.sport_event_status.home_display_score}`)
         $(".awayDisplayScore").append(`${latestMatch.sport_event_status.away_display_score}`)
 
 
-        const homeStats = latestMatch.statistics.competitors[1].statistics;
-        const awayStats = latestMatch.statistics.competitors[0].statistics;
+        const homeStats = homeTeam.statistics;
+        const awayStats = awayTeam.statistics;
 
         $(".homeStats").html(getStatisticsHtml(homeStats));
         $(".awayStats").html(getStatisticsHtml(awayStats));
