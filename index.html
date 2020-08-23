@@ -28,6 +28,7 @@
             <div class="col s1"></div>
         </div>
     </div>
+
     <section class="container">
         <div class="row">
             <div class="ladder col s4">
@@ -38,15 +39,15 @@
                             <th colspan="2" class="buttonExpanded hidden"></th>
                             <th class="buttonExpanded"></th>
                             <th>Name</th>
-                            <th>P</th>
-                            <th>W</th>
-                            <th>L</th>
-                            <th>D</th>
-                            <th>%</th>
+                            <th class="tooltipped" data-position="top" data-tooltip="Matches Played">P</th>
+                            <th class="tooltipped" data-position="top" data-tooltip="Matches Won">W</th>
+                            <th class="tooltipped" data-position="top" data-tooltip="Matches Lost">L</th>
+                            <th class="tooltipped" data-position="top" data-tooltip="Matches Drawn">D</th>
+                            <th class="tooltipped" data-position="top" data-tooltip="Points Scored / Points Conceded">%
+                            </th>
                         </tr>
                     </thead>
                     <tbody class="standings">
-
                     </tbody>
                 </table>
             </div>
@@ -61,8 +62,18 @@
             </div>
             <div class="match-info col s6">
                 <div class="container-match-info">
+                    <div style="height: 20px;" class="row">
+                        <div class="col s12">
+                            <ul class="tabs">
+                                <li class="tab col s4"><a  href="#matchStats">Match Stats</a></li>
+                                <li class="tab col s4"><a href="#timeline">Match Timeline</a></li>
+                                <li class="tab col s4"><a href="#map">Venue</a></li>
+
+                            </ul>
+                        </div>
+                    </div>
                     <div class="row">
-                        <div class="timelineContainer scrollable col s4">
+                        <div id="timeline" class="timelineContainer scrollable col s12 l8">
                             <h5 class="center-align">Match Timeline</h5>
                             <div class="timelineError center-align">Timeline not available for future matches.</div>
                             <div class="row">
@@ -75,10 +86,9 @@
                                 <div class="col s3"><button class="period-selector btn-small" period="period4"
                                         name="4th-period">Q4</button></div>
                             </div>
+
                             <div class="timeline">
-
                                 <div class="period period1">
-
                                     <div class="timeline-event major-event match-start">
                                         <div class="event-content">
                                             Match Start
@@ -90,40 +100,32 @@
                                     <div class="timeline-event major-event period-end">
                                         <div class="event-content">Period End</div>
                                     </div>
-
                                 </div>
                                 <div class="period period2">
-
                                     <div class="timeline-event major-event period-start">
                                         <div class="event-content">
                                             Period Start
                                         </div>
                                     </div>
                                     <div class="period-events">
-
                                     </div>
                                     <div class="timeline-event major-event period-end">
                                         <div class="event-content">Period End</div>
                                     </div>
-
                                 </div>
                                 <div class="period period3">
-
                                     <div class="timeline-event major-event period-start">
                                         <div class="event-content">
                                             Period Start
                                         </div>
                                     </div>
                                     <div class="period-events">
-
                                     </div>
                                     <div class="timeline-event major-event period-end">
                                         <div class="event-content">Period End</div>
                                     </div>
-
                                 </div>
                                 <div class="period period4">
-
                                     <div class="timeline-event major-event period-start">
                                         <div class="event-content">
                                             Period Start
@@ -135,20 +137,16 @@
                                     <div class="timeline-event major-event match-end">
                                         <div class="event-content">Match End</div>
                                     </div>
-
                                 </div>
-
-
                             </div>
 
                         </div>
-                        <div class="container col s8">
-                            <div class="matchStats">
+                        <div class="container col s12 l8">
+                            <div id="matchStats" class="matchStats">
                                 <div class="row">
                                     <div class="matchResult col s12">
                                         <div class="row">
                                             <div class="matchResultTitle col s12 center-align">
-
                                             </div>
                                         </div>
                                         <div class="row">
@@ -171,7 +169,6 @@
                                 </div>
                                 <div class="row">
                                     <div class="homeStats center-align col s5">
-
                                     </div>
                                     <div class="vsStats col s2">
                                         <table>
@@ -220,18 +217,19 @@
                                     <div class="awayStats center-align col s5">
                                     </div>
                                 </div>
-
                             </div>
-                            <div class="row">
-                                <div class="col s7">
+
+                            <div id="map" class="row">
+                                <div class="col s12 l8">
                                     <div id="venue"></div>
                                 </div>
-                                <div class="col s5">
+                            </div>
+                            <div class="row">
+                                <div class="col s12 l8">
                                     <div class="venueDetails">
                                         <p class="venueName"></p>
                                         <p class="venueCapacity"></p>
                                         <p class="venueAddress"></p>
-
                                     </div>
                                 </div>
                             </div>
@@ -245,6 +243,7 @@
     <div id="gradientBottom" class=""></div>
 
     <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment.min.js"
         integrity="sha512-rmZcZsyhe0/MAjquhTgiUcb4d9knaFc7b5xAfju483gbEXTkeJRUMIPk6s3ySZMYUHEcjKbjLjyddGWMrNEvZg=="
         crossorigin="anonymous"></script>

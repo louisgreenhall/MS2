@@ -24,10 +24,17 @@ $(() => {
         "West Coast Eagles": "WCE",
         "Western Bulldogs": "BUL"
     };
+    let prevMarker = null;
 
     const teamInfo = {
         matches: [],
     }
+
+    const timelines = {};
+    const probabilities = {};
+    let seasonMatches = null;
+
+    const seasonId = "sr:season:72434";
 
     // collapse button functions
     $(".buttonExpanded").on("click", () => {
@@ -49,7 +56,7 @@ $(() => {
     }
 
 
-    let standingsUrl = "https://corsaway.herokuapp.com/proxy?url=https://api.sportradar.com/australianrules/trial/v2/en/seasons/sr:season:72434/standings.json?api_key=umfmpvapcrzjuhhw73mbysgh";
+    let standingsUrl = `https://corsaway.herokuapp.com/proxy?url=https://api.sportradar.com/australianrules/trial/v2/en/seasons/${seasonId}/standings.json?api_key=umfmpvapcrzjuhhw73mbysgh`;
     fetch(standingsUrl)
         .then(response => {
             return response.json();
@@ -83,8 +90,10 @@ $(() => {
             };
         });
 
-    $("body").on("click", ".team", function (event) {
+    $("body").on("click", ".team", async function (event) {
         $(".welcome").hide()
+        $('.tabs').tabs();
+
 
         if (!$('.ladder table').hasClass("collapse")) {
             collapse();
@@ -106,9 +115,10 @@ $(() => {
         $(".timelineError").hide();
 
         let id = $(target).attr("competitorId"); // store attribute of clicked competitorId.
-        fetchSeasonDetails("sr:season:72434").then(function (json) {
-
-            let matches = filterMatchesByTeam(json, id);
+        // fetchSeasonDetails("sr:season:72434").then(async function (json) 
+        let season = await getSeasonDetails(seasonId)
+        
+            let matches = filterMatchesByTeam(season, id);
 
 
             teamInfo.matches = matches;
@@ -132,13 +142,14 @@ $(() => {
 
             updateVenue(latestMatch)
 
-
-
-            fetchMatchTimeline(latestMatch.sport_event.id).then(function (json) {
-                populateMatchTimeline(json);
-                populateMatchStats(json);
-            });
-        });
+            
+            
+            let timeline = await getMatchTimeline(latestMatch.sport_event.id)
+            
+            populateMatchTimeline(timeline);
+            populateMatchStats(timeline);
+    
+        
     })
 
     function getStatisticsHtml(stats) {
@@ -208,7 +219,7 @@ $(() => {
     };
 
 
-    $("body").on("click", ".match", function (event) {
+    $("body").on("click", ".match", async function (event) {
 
         let id = $(event.target).attr("matchId"); // store matchId attribute of clicked element 
 
@@ -220,22 +231,23 @@ $(() => {
         updateVenue(match)
 
         if (isMatchCompleted(match)) {
-            fetchMatchTimeline(id).then(function (matchTimeline) {
+            let matchTimeline = await getMatchTimeline(id);
+            
+            $(".timelineContainer button").show();
+            $(".timeline").children().show();
+            $(".timelineError").hide();
 
-                $(".timelineContainer button").show();
-                $(".timeline").children().show();
-                $(".timelineError").hide();
-
-                populateMatchStats(matchTimeline);
-                populateMatchTimeline(matchTimeline);
-            });
+            populateMatchStats(matchTimeline);
+            populateMatchTimeline(matchTimeline);
 
         } else {
             $(".timelineContainer button").hide();
             $(".timeline").children().hide();
             $(".timelineError").show();
 
-            fetchMatchProbabilities(id).then(function (probs) {
+            let probs = await getMatchProbabilities(id)
+            
+                
                 $(".homeStats").html("");
                 $(".awayStats").html("");
                 $(".homeDisplayScore").html("");
@@ -254,9 +266,9 @@ $(() => {
 
                 $(".awayTeam .team-image").attr("src", `assets/imgs/${abbreviations[match.sport_event.competitors[1].name]}.png`);
                 $(".awayTeam .team-abbr").text(abbreviations[match.sport_event.competitors[1].name]);
-            }) 
+            
             $(".vsStats").hide()
-        }
+            } 
     });
 
 
@@ -292,22 +304,36 @@ $(() => {
         let lat = Number.parseFloat(latLngSplit[0]);
         let lng = Number.parseFloat(latLngSplit[1]);
         console.log(latLng)
-        map.setCenter({
+        let realLatLng = {
             lat: lat,
             lng: lng
-        })
+        };
+        map.setCenter(realLatLng)
+
+        if (prevMarker != null) {
+            prevMarker.setMap(null);
+        }
+
+        prevMarker = new google.maps.Marker({
+            position: realLatLng,
+            title: match.sport_event.venue.name
+        });
+
+        // To add the marker to the map, call setMap();
+        prevMarker.setMap(map);
 
 
     }
+
     function getTeamByQualifier(competitors, qualifier) {
-        return competitors.find(function(c) { 
+        return competitors.find(function (c) {
             return c.qualifier == qualifier
         });
     }
 
     function populateMatchStats(latestMatch) {
 
-        $(`[matchId='${latestMatch.sport_event.id}']`).addClass("active");
+        $(`[matchId='${latestMatch.sport_event.id}']`).addClass("fixture-active");
         // want to show the match when I find the latest match.
 
         $(".vsStats").show()
@@ -328,6 +354,7 @@ $(() => {
 
         $(".homeDisplayScore").append(`${latestMatch.sport_event_status.home_display_score}`)
         $(".awayDisplayScore").append(`${latestMatch.sport_event_status.away_display_score}`)
+        console.log(`${latestMatch.sport_event.id}`)
 
 
         const homeStats = homeTeam.statistics;
@@ -425,11 +452,12 @@ $(() => {
 
     }
 
-    function filterMatchesByTeam(json, id) {
+    function filterMatchesByTeam(season, id) {
+        
         let matches = [];
-        for (let i = 0; i < json.summaries.length; i++) {
+        for (let i = 0; i < season.summaries.length; i++) {
 
-            let match = json.summaries[i];
+            let match = season.summaries[i];
 
             if (match.sport_event_status.status === "cancelled") {
                 continue;
@@ -441,22 +469,65 @@ $(() => {
         return matches;
     }
 
-    // reusable function to get the season details from the api
+    
+    async function getSeasonDetails(seasonId) {
+        
+        let matches = null;
+        if (seasonMatches != null) {
+            matches = seasonMatches;
+        } else {
+            matches = await fetchSeasonDetails(seasonId);
+            
+            seasonMatches = matches;
+        }
 
-    function fetchSeasonDetails(id) {
+        return matches
+    }
 
-        return fetch(`https://corsaway.herokuapp.com/proxy?url=https://api.sportradar.com/australianrules/trial/v2/en/seasons/${id}/summaries.json?api_key=umfmpvapcrzjuhhw73mbysgh`)
+// reusable function to get the season details from the api
+    function fetchSeasonDetails(seasonId) {
+
+        return fetch(`https://corsaway.herokuapp.com/proxy?url=https://api.sportradar.com/australianrules/trial/v2/en/seasons/${seasonId}/summaries.json?api_key=umfmpvapcrzjuhhw73mbysgh`)
             .then(function (response) {
                 return response.json();
             });
     }
 
+    async function getMatchTimeline(matchId) {
+        
+        let timeline = null;
+        if (typeof timelines[matchId] !== "undefined") {
+            timeline = timelines[matchId];
+        } else {
+            timeline = await fetchMatchTimeline(matchId);
+            timelines[matchId] = timeline;
+        }
+
+        return timeline;
+    }
+
     function fetchMatchTimeline(matchId) {
+        
         let timelineUrl = `https://corsaway.herokuapp.com/proxy?url=https://api.sportradar.com/australianrules/trial/v2/en/match/${matchId}/timeline.json?api_key=umfmpvapcrzjuhhw73mbysgh`
         return fetch(timelineUrl)
             .then(function (response) {
                 return response.json();
             });
+    }
+
+
+
+    async function getMatchProbabilities(matchId) {
+        
+        let probability = null;
+        if (typeof probabilities[matchId] !== "undefined") {
+            probability = probabilities[matchId];
+        } else {
+            probability = await fetchMatchProbabilities(matchId);
+            probabilities[matchId] = probability;
+        }
+
+        return probability;
     }
 
     function fetchMatchProbabilities(matchId) {
@@ -474,6 +545,15 @@ $(() => {
                 return response.json();
             });
     }
+
+    // side nav & tooltip function from materialize
+    // document.addEventListener('DOMContentLoaded', function() {
+    //     var elems = document.querySelectorAll('.sidenav');
+    //     var instances = M.Sidenav.init(elems, options);
+    //   })
+
+    $('.tooltipped').tooltip();
+
 });
 
 
