@@ -237,8 +237,8 @@ button.btn-small:focus {
   padding-top: 20px
 }
 
-#map {
-  display: none;
+.error {
+  background: #F44336;
 }
 
 table.collapse td:nth-child(1),
