@@ -106,6 +106,13 @@ N.B. Throttling and usage limits (1000 requests per month) were an issue whilst 
 
 This section should describe the process you went through to deploy the project to a hosting platform (e.g. GitHub Pages or Heroku).
 
+To deploy on github pages I have taken the following steps.
+- Loaded google chrome and logged into my Github account
+- Selected my "MS2" repo and clicked the "settings" tab (located on the right hand side of the page)
+- I've then scrolled down to the heading titled "Github Pages"
+- within this heading, I've selected the "Master branch" and "Root/" and then clicked "Save"
+- After a few moments Github had updated and my page was ready to be viewed online by scrolling back down to the heading "Github Pages" and selecting the link that was now just below the heading.
+
 In particular, you should provide all details of the differences between the deployed version and the development version, if any, including:
 - Different values for environment variables (Heroku Config Vars)?
 - Different configuration files?
