@@ -33,7 +33,6 @@ $(() => {
     const timelines = {};
     const probabilities = {};
     let seasonMatches = null;
-
     const seasonId = "sr:season:72434";
 
     // collapse button functions
@@ -56,8 +55,12 @@ $(() => {
     }
 
 
+
+
+
     let standingsUrl = `https://corsaway.herokuapp.com/proxy?url=https://api.sportradar.com/australianrules/trial/v2/en/seasons/${seasonId}/standings.json?api_key=umfmpvapcrzjuhhw73mbysgh`;
     fetch(standingsUrl)
+        .then(handleErrors)
         .then(response => {
             return response.json();
         })
@@ -88,6 +91,11 @@ $(() => {
                                      <td>${team.competitor_standing.points_percentage}</td>
                                      </tr>`);
             };
+        }).catch(function () {
+            M.toast({
+                html: 'Failed to load season standings from API, please reload the page to try again',
+                classes: 'error'
+            });
         });
 
     $("body").on("click", ".team", async function (event) {
@@ -117,39 +125,39 @@ $(() => {
         let id = $(target).attr("competitorId"); // store attribute of clicked competitorId.
         // fetchSeasonDetails("sr:season:72434").then(async function (json) 
         let season = await getSeasonDetails(seasonId)
-        
-            let matches = filterMatchesByTeam(season, id);
+
+        let matches = filterMatchesByTeam(season, id);
 
 
-            teamInfo.matches = matches;
+        teamInfo.matches = matches;
 
-            $(".matches").html(""); //clearing in case team fixtures already loaded.
+        $(".matches").html(""); //clearing in case team fixtures already loaded.
 
-            for (let i = 0; i < matches.length; i++) {
+        for (let i = 0; i < matches.length; i++) {
 
-                let match = matches[i];
-                let matchId = match.sport_event.id;
+            let match = matches[i];
+            let matchId = match.sport_event.id;
 
-                // add list element to matches list with matchId attribute that can be used later once link clicked.
-                $(".matches").append(`<li style="padding-left:10px;"> <a href="#match-info" class="match" matchId="${matchId}">${match.sport_event.sport_event_context.stage.round} - ${match.sport_event.competitors[0].abbreviation} vs ${match.sport_event.competitors[1].abbreviation}</a></li>`)
-            }
+            // add list element to matches list with matchId attribute that can be used later once link clicked.
+            $(".matches").append(`<li style="padding-left:10px;"> <a href="#match-info" class="match" matchId="${matchId}">${match.sport_event.sport_event_context.stage.round} - ${match.sport_event.competitors[0].abbreviation} vs ${match.sport_event.competitors[1].abbreviation}</a></li>`)
+        }
 
-            $(".match-info").show();
-            $(".fixtures").show();
+        $(".match-info").show();
+        $(".fixtures").show();
 
 
-            let latestMatch = getLatestMatchWithStatistics(matches);
+        let latestMatch = getLatestMatchWithStatistics(matches);
 
-            updateVenue(latestMatch)
+        updateVenue(latestMatch)
 
-            
-            
-            let timeline = await getMatchTimeline(latestMatch.sport_event.id)
-            
-            populateMatchTimeline(timeline);
-            populateMatchStats(timeline);
-    
-        
+
+
+        let timeline = await getMatchTimeline(latestMatch.sport_event.id)
+
+        populateMatchTimeline(timeline);
+        populateMatchStats(timeline);
+
+
     })
 
     function getStatisticsHtml(stats) {
@@ -199,7 +207,7 @@ $(() => {
     }
 
     function isMatchCompleted(match) {
-        
+
         let currentMatchKeys = Object.keys(match);
         return currentMatchKeys.includes("statistics") || match.sport_event_status.status === "live";
     }
@@ -233,7 +241,7 @@ $(() => {
 
         if (isMatchCompleted(match)) {
             let matchTimeline = await getMatchTimeline(id);
-            
+
             $(".timelineContainer button").show();
             $(".timeline").children().show();
             $(".timelineError").hide();
@@ -247,29 +255,29 @@ $(() => {
             $(".timelineError").show();
 
             let probs = await getMatchProbabilities(id)
-            
-                
-                $(".homeStats").html("");
-                $(".awayStats").html("");
-                $(".homeDisplayScore").html("");
-                $(".awayDisplayScore").html("");
+
+
+            $(".homeStats").html("");
+            $(".awayStats").html("");
+            $(".homeDisplayScore").html("");
+            $(".awayDisplayScore").html("");
 
 
 
-                $(".matchResultTitle").text(`Round ${match.sport_event.sport_event_context.stage.round} of ${match.sport_event.sport_event_context.season.name}`)
-                $(".matchResultTitle").append(`<p>${moment(match.sport_event.scheduled).format("dddd, MMMM Do YYYY, h:mm:ss a")}</p>`);
-                if (probs.probabilities.markets.length > 0) {
-                    $(".homeStats").append(`Win Probability: ${probs.probabilities.markets[0].outcomes[0].probability}%`);
-                    $(".awayStats").append(`Win Probability: ${probs.probabilities.markets[0].outcomes[1].probability}%`);
-                } //Stops error of future matches not having win/loss probabilities yet
-                $(".homeTeam .team-image").attr("src", `assets/imgs/${abbreviations[match.sport_event.competitors[0].name]}.png`);
-                $(".homeTeam .team-abbr").text(abbreviations[match.sport_event.competitors[0].name]);
+            $(".matchResultTitle").text(`Round ${match.sport_event.sport_event_context.stage.round} of ${match.sport_event.sport_event_context.season.name}`)
+            $(".matchResultTitle").append(`<p>${moment(match.sport_event.scheduled).format("dddd, MMMM Do YYYY, h:mm:ss a")}</p>`);
+            if (probs.probabilities.markets.length > 0) {
+                $(".homeStats").append(`Win Probability: ${probs.probabilities.markets[0].outcomes[0].probability}%`);
+                $(".awayStats").append(`Win Probability: ${probs.probabilities.markets[0].outcomes[1].probability}%`);
+            } //Stops error of future matches not having win/loss probabilities yet
+            $(".homeTeam .team-image").attr("src", `assets/imgs/${abbreviations[match.sport_event.competitors[0].name]}.png`);
+            $(".homeTeam .team-abbr").text(abbreviations[match.sport_event.competitors[0].name]);
 
-                $(".awayTeam .team-image").attr("src", `assets/imgs/${abbreviations[match.sport_event.competitors[1].name]}.png`);
-                $(".awayTeam .team-abbr").text(abbreviations[match.sport_event.competitors[1].name]);
-            
+            $(".awayTeam .team-image").attr("src", `assets/imgs/${abbreviations[match.sport_event.competitors[1].name]}.png`);
+            $(".awayTeam .team-abbr").text(abbreviations[match.sport_event.competitors[1].name]);
+
             $(".vsStats").hide()
-            } 
+        }
     });
 
 
@@ -419,16 +427,10 @@ $(() => {
             // using a switch instead of if/else statements because there is a defined number of options available for timeline event types 
             switch (timelineEvent.type) {
                 case "match_started":
-                    console.log("match_started")
                     break;
                 case "period_start":
-                    console.log("period_start");
-                    console.log(currentPeriod);
-
                     break;
                 case "score_change":
-                    console.log("score_change", timelineEvent)
-
                     $(`.timeline .period${currentPeriod} .period-events`).append(`<div class="timeline-event ${timelineEvent.team}">
                                                                 <div class="event-badge">${timelineEvent.match_time}</div>
                                                                 <div class="event-content">
@@ -438,14 +440,11 @@ $(() => {
                                                             </div>`);
                     break;
                 case "period_score":
-                    console.log("period_score")
                     currentPeriod++;
                     break;
                 case "break_start":
-                    console.log("break_start")
                     break;
                 case "match_ended":
-                    console.log("match_ended")
                     break;
             }
             i++;
@@ -454,7 +453,7 @@ $(() => {
     }
 
     function filterMatchesByTeam(season, id) {
-        
+
         let matches = [];
         for (let i = 0; i < season.summaries.length; i++) {
 
@@ -470,32 +469,40 @@ $(() => {
         return matches;
     }
 
-    
+
     async function getSeasonDetails(seasonId) {
-        
+
         let matches = null;
         if (seasonMatches != null) {
             matches = seasonMatches;
         } else {
             matches = await fetchSeasonDetails(seasonId);
-            
+
             seasonMatches = matches;
         }
 
         return matches
     }
 
-// reusable function to get the season details from the api
+    // reusable function to get the season details from the api
     function fetchSeasonDetails(seasonId) {
 
         return fetch(`https://corsaway.herokuapp.com/proxy?url=https://api.sportradar.com/australianrules/trial/v2/en/seasons/${seasonId}/summaries.json?api_key=umfmpvapcrzjuhhw73mbysgh`)
+            .then(handleErrors)
             .then(function (response) {
                 return response.json();
+            })
+            .catch(function () {
+                M.toast({
+                    html: 'Failed to load season summaries from API, please reload the page to try again',
+                    classes: 'error'
+                });
+
             });
     }
 
     async function getMatchTimeline(matchId) {
-        
+
         let timeline = null;
         if (typeof timelines[matchId] !== "undefined") {
             timeline = timelines[matchId];
@@ -508,18 +515,31 @@ $(() => {
     }
 
     function fetchMatchTimeline(matchId) {
-        
+
         let timelineUrl = `https://corsaway.herokuapp.com/proxy?url=https://api.sportradar.com/australianrules/trial/v2/en/match/${matchId}/timeline.json?api_key=umfmpvapcrzjuhhw73mbysgh`
         return fetch(timelineUrl)
+            .then(handleErrors)
             .then(function (response) {
                 return response.json();
+            }).catch(function (err) {
+                M.toast({
+                    html: 'Failed to load match timeline from API, please reload the page to try again',
+                    classes: 'error'
+                });
             });
+    }
+
+    function handleErrors(response) {
+        if (!response.ok) {
+            throw Error(response.statusText);
+        }
+        return response;
     }
 
 
 
     async function getMatchProbabilities(matchId) {
-        
+
         let probability = null;
         if (typeof probabilities[matchId] !== "undefined") {
             probability = probabilities[matchId];
@@ -534,16 +554,29 @@ $(() => {
     function fetchMatchProbabilities(matchId) {
         let probUrl = `https://corsaway.herokuapp.com/proxy?url=https://api.sportradar.com/australianrules/trial/v2/en/matches/${matchId}/probabilities.json?api_key=umfmpvapcrzjuhhw73mbysgh`
         return fetch(probUrl)
+            .then(handleErrors)
+
             .then(function (response) {
                 return response.json();
+            }).catch(function () {
+                M.toast({
+                    html: 'Failed to load match probabilities from API, please reload the page to try again',
+                    classes: 'error'
+                });
             });
     }
 
     function fetchGeocodeData(latLng) {
         let geocodeUrl = `https://maps.googleapis.com/maps/api/geocode/json?&key=AIzaSyDWYUEHSzOcPWpL6lJq9T_CilOpqRs7c2w&latlng=${latLng}`
         return fetch(geocodeUrl)
+            .then(handleErrors)
             .then(function (response) {
                 return response.json();
+            }).catch(function () {
+                M.toast({
+                    html: 'Failed to load address information from API, please reload the page to try again',
+                    classes: 'error'
+                });
             });
     }
 
