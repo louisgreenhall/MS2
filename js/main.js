@@ -199,6 +199,7 @@ $(() => {
     }
 
     function isMatchCompleted(match) {
+        
         let currentMatchKeys = Object.keys(match);
         return currentMatchKeys.includes("statistics") || match.sport_event_status.status === "live";
     }

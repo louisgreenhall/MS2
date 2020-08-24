@@ -5,9 +5,48 @@
 html,
 body {
   font-family: 'montserrat', sans-serif;
+  }
+
+/* @media screen and (min-width: 320px) {
+ 
+  
+} */
+
+@media screen and (min-width: 768px) and (max-width: 1278px) {
+
+  html,
+  body {
+    overflow-y: hidden;
+  }
+
+  .logo {
+    width: 375px;
+    padding-top: 100px;
+    margin: auto;
+  }
+
+  .welcome h2 {
+    font-size: 30px;
+  }
+
+  .ladder tr {
+    max-width: 250px;
+  }
+
+  .welcome {
+    text-align: center;
+  }
+
+  .standings td,
+  .standings th {
+    padding: 0;
+  }
+
+ 
+
 }
 
-@media(min-width: 1280px) {
+@media screen and (min-width: 1279px) {
 
   html,
   body {
@@ -42,391 +81,408 @@ body {
   }
 
   .logo {
+    width: 375px;
     margin: auto;
-    padding-left: 200px;
     padding-top: 150px;
   }
 
-  /* TEAM LADDER CSS*/
-
-  .container {
-    width: 100%;
-    max-width: initial;
-    padding-top: 40px;
-    padding-bottom: 12px;
-    box-sizing: border-box;
-  }
-
-  .container .row {
-    margin: 0;
-  }
-
-  .container .row .col {
-    padding: 0;
-  }
-
-  .standings,
-  .fixtures {
-    font-size: 0.8rem;
-  }
-
-  .standings tr {
-    height: 25px;
-  }
-
-  .standings tr:nth-child(8) {
-    border-bottom: solid 2px #F44336;
-  }
-
-  .standings tr:nth-child(1),
-  .standings tr:nth-child(2),
-  .standings tr:nth-child(3),
-  .standings tr:nth-child(4) {
-    border-left: solid 8px darkblue;
-  }
-
-  .standings tr:nth-child(5),
-  .standings tr:nth-child(6),
-  .standings tr:nth-child(7),
-  .standings tr:nth-child(8) {
-    border-left: solid 8px lightblue;
-  }
-
-  .standings tr:nth-child(9),
-  .standings tr:nth-child(10),
-  .standings tr:nth-child(11),
-  .standings tr:nth-child(12),
-  .standings tr:nth-child(13),
-  .standings tr:nth-child(14),
-  .standings tr:nth-child(15),
-  .standings tr:nth-child(16),
-  .standings tr:nth-child(17),
-  .standings tr:nth-child(18) {
-    border-left: solid 8px #fff;
-  }
-
-
-  .ladder tr td,
-  .ladder tr th {
-    padding-top: 0;
-    padding-bottom: 0;
+  .welcome {
     text-align: center;
   }
 
-  .ladder tr th {
-    text-align: center;
-  }
-
-  button.ladderButton {
-    background: transparent;
-    border: solid 1px black;
-    color: inherit;
-    font-weight: 500;
-  }
-
-  div button.ladderButton:hover,
-  div button.ladderButton:focus {
-    background: transparent;
-    opacity: 0.9;
-    color: rgb(255, 255, 255);
-    border: solid 2px white;
-  }
-
-  .standings tr td img {
-    height: auto;
-    max-height: 21px;
-    max-width: 30px;
-    text-align: center;
-    margin: auto;
-  }
+ 
+}
 
 
-  .ladder tr td:nth-child(1),
-  .ladder tr td:nth-child(4),
-  .ladder tr th:nth-child(1),
-  .ladder tr th:nth-child(4) {
-    text-align: left;
-  }
 
-  table.collapse td,
-  table.collapse th {
-    display: none;
-  }
+.ladder {
+  line-height: 1.72;
+}
 
-  table td:nth-child(3) {
-    display: none;
-  }
+/* TEAM LADDER CSS*/
 
-  .buttonExpanded.hidden {
-    display: none;
-  }
+.container {
+  width: 100%;
+  max-width: initial;
+  padding-top: 40px;
+  padding-bottom: 12px;
+  box-sizing: border-box;
+}
 
-  button,
-  .btn-small {
-    background-color: darkblue;
-    border-color: darkblue;
-    color: white;
-  }
+.container .row {
+  margin: 0;
+}
 
-  button.period-selector.btn-small:hover,
-  button.period-selector:focus,
-  button.btn-small:focus {
-    background: rgba(0, 0, 0, 0.5);
-    color: darkblue;
-  }
+.container .row .col {
+  padding: 0;
+}
 
-  .toggleCollapse {
-    position: absolute;
-    top: 0;
-    right: 0;
-  }
+.standings,
+.fixtures {
+  font-size: 0.8rem;
+}
 
-  .ladder-toggle {
-    padding-top: 20px
-  }
+.standings tr {
+  height: 25px;
+}
 
+.standings tr:nth-child(8) {
+  border-bottom: solid 2px #F44336;
+}
 
-  table.collapse td:nth-child(1),
-  table.collapse td:nth-child(2),
-  table.collapse td:nth-child(3),
-  table.collapse td:nth-child(5),
-  table.collapse td:nth-child(9),
-  table.collapse th:nth-child(1),
-  table.collapse th:nth-child(2),
-  table.collapse th:nth-child(5),
-  table.collapse th:nth-child(9)
-   {
-    display: table-cell;
-    padding: 0 5px;
-  }
+.standings tr:nth-child(1),
+.standings tr:nth-child(2),
+.standings tr:nth-child(3),
+.standings tr:nth-child(4) {
+  border-left: solid 8px darkblue;
+}
 
-  .ladder {
-    border-right: 2px solid black;
-  }
+.standings tr:nth-child(5),
+.standings tr:nth-child(6),
+.standings tr:nth-child(7),
+.standings tr:nth-child(8) {
+  border-left: solid 8px lightblue;
+}
 
-  tr {
-    border-bottom: none;
-  }
-
-  /* Fixtures */
-
-  .fixtures {
-    height: 100vh;
-    border-right: 2px solid black;
-    display: none;
-  }
-
-  .fixtures li {
-    height: 40px;
-  }
-
-  /* .matches .li a {
-    color: inherit;
-  } */
-
-  /* MATCH INFO CSS*/
-  .match-info {
-    display: none;
-  }
-
-  .period {
-    display: none;
-    padding-left: 15px
-  }
-
-  .match-info .row .col {
-    position: relative;
-  }
-
-  .match-info .row .col .row {
-    height: auto;
-    padding-left: 20px;
-  }
-
-  .match-info .row .col .row .col {
-    height: auto;
-    border: none;
-  }
-
-  .timelineContainer {
-    border-right: solid 2px #dedede;
-  }
-
-  .timelineContainer h5 {
-    font-size: 14px;
-  }
-
-  .container-match-info .row .col.timelineContainer {
-    padding: 0 5px;
-  }
-
-  .match-info .timeline .timeline-splitter {
-    height: 100%;
-    background: #333;
-    width: 6px;
-    left: calc(50% - 10px);
-    position: absolute;
-    border: 0;
+.standings tr:nth-child(9),
+.standings tr:nth-child(10),
+.standings tr:nth-child(11),
+.standings tr:nth-child(12),
+.standings tr:nth-child(13),
+.standings tr:nth-child(14),
+.standings tr:nth-child(15),
+.standings tr:nth-child(16),
+.standings tr:nth-child(17),
+.standings tr:nth-child(18) {
+  border-left: solid 8px #fff;
+}
 
 
-  }
+.ladder tr td,
+.ladder tr th {
+  padding-top: 0;
+  padding-bottom: 0;
+  text-align: center;
+}
 
-  .timelineError {
-    display: none;
-  }
+.ladder tr th {
+  text-align: center;
+}
 
-  .match-info .timeline {
-    height: calc(90vh - 54px);
-    padding-bottom: 0px;
-  }
+button.ladderButton {
+  background: transparent;
+  border: solid 1px black;
+  color: inherit;
+  font-weight: 500;
+}
 
-  .match-info .timeline .period-events {
-    position: relative;
-  }
+div button.ladderButton:hover,
+div button.ladderButton:focus {
+  background: transparent;
+  opacity: 0.9;
+  color: rgb(255, 255, 255);
+  border: solid 2px white;
+}
 
-  .match-info .timeline .timeline-event {
-    margin-top: 10px;
-    position: relative;
-    height: 20px;
-    width: 100%;
+.standings tr td img {
+  height: auto;
+  max-height: 21px;
+  max-width: 30px;
+  text-align: center;
+  margin: auto;
+}
 
-  }
 
-  .match-info .timeline .timeline-event.major-event .event-content {
-    width: 50%;
-    left: 22%;
-    background: white;
-    position: relative;
-    z-index: 50;
-    padding-bottom: 3px;
-    box-sizing: content-box;
-  }
+.ladder tr td:nth-child(1),
+.ladder tr td:nth-child(4),
+.ladder tr th:nth-child(1),
+.ladder tr th:nth-child(4) {
+  text-align: left;
+}
 
-  .match-info .timeline .timeline-event .event-badge {
-    height: 20px;
-    width: 20px;
-    background: blue;
-    border: 1px solid black;
-    border-radius: 10px;
-    position: absolute;
-    left: calc(50% - 16px);
-    padding-top: 1px;
-    color: white;
-    text-align: center;
-    font-size: 10px;
+table.collapse td,
+table.collapse th {
+  display: none;
+}
 
-  }
+table td:nth-child(3) {
+  display: none;
+}
 
-  .match-info .timeline .timeline-event .event-content {
-    border: 1px solid black;
-    border-radius: 3%;
-    width: 30%;
-    height: 20px;
-    position: absolute;
-    text-align: center;
-  }
+.buttonExpanded.hidden {
+  display: none;
+}
 
-  .match-info .timeline .timeline-event.home .event-content {
-    background-color: #F44336
-  }
+button,
+.btn-small {
+  background-color: darkblue;
+  border-color: darkblue;
+  color: white;
+}
 
-  .match-info .timeline .timeline-event.away .event-content {
-    background-color: #4CAF50;
-    left: calc(50% + 10%)
-  }
+button.period-selector.btn-small:hover,
+button.period-selector:focus,
+button.btn-small:focus {
+  background: rgba(0, 0, 0, 0.5);
+  color: darkblue;
+}
 
-  .btn-small .period-selector {
-    margin-left: 5px;
-    margin-right: 5px;
-    width: 40px;
-    text-align: center;
-    padding: 0 0;
-  }
+.toggleCollapse {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
 
-  .timeline .row .s3 {
-    padding: 5px;
-  }
+.ladder-toggle {
+  padding-top: 20px
+}
 
-  .active {
-    color: #ff2ef0;
-  }
+#map {
+  display: none;
+}
 
-  /* Match Results */
+table.collapse td:nth-child(1),
+table.collapse td:nth-child(2),
+table.collapse td:nth-child(3),
+table.collapse td:nth-child(5),
+table.collapse td:nth-child(9),
+table.collapse th:nth-child(1),
+table.collapse th:nth-child(2),
+table.collapse th:nth-child(5),
+table.collapse th:nth-child(9) {
+  display: table-cell;
+  padding: 0 5px;
+}
 
-  .homeTeam,
-  .awayTeam {
-    text-align: center;
-  }
 
-  .vs h4 {
-    margin-top: revert;
-  }
+.ladder {
+  border-right: 2px solid black;
+}
 
-  .homeDisplayScore,
-  .awayDisplayScore {
-    text-align: center;
-    margin: 5px 0;
-  }
+tr {
+  border-bottom: none;
+}
 
-  .homeTeam img,
-  .awayTeam img {
-    height: auto;
-    max-height: 40px;
-    max-width: 40px;
-    text-align: center;
-    margin: auto;
-    margin-top: 30px;
-  }
+/* Fixtures */
 
-  .homeStats tr,
-  .homeStats tr td,
-  .awayStats tr,
-  .awayStats tr td {
-    height: 20px !important;
-    max-height: 20px !important;
-    padding: 0;
-  }
+.fixtures {
+  height: 100vh;
+  border-right: 2px solid black;
+  display: none;
+}
 
-  .row .venue,
-  .venueDetails {
-    border-top: 1px solid black;
-    font-size: 14px;
-  }
+.fixtures li {
+  height: 40px;
+}
 
-  .venueDetails p {
-    margin: 10px;
-  }
+/* MATCH INFO CSS*/
+.match-info {
+  display: none;
+}
 
-  /* Vs Stats */
+#matchStats {
+  width: 100%;
+}
 
-  .vsStats table {
-    height: 220px;
-  }
 
-  .vsStats tr,
-  .vsStats tr td {
-    height: 20px !important;
-    max-height: 20px !important;
-    padding: 0;
+.period {
+  display: none;
+  padding-left: 15px
+}
 
-  }
+.match-info .row .col {
+  position: relative;
+}
 
-  .vsStats tr td {
-    border: 3px solid white;
-    border-radius: 6px;
-    max-width: 40px;
-    width: 40px;
-    font-size: 0.8rem;
-    text-align: center;
-    color: white;
-  }
+.match-info .row .col .row {
+  height: auto;
+  padding: 5px;
+}
+}
 
-  .amber {
-    background-color: #FFBF00;
-  }
+.match-info .row .col .row .col {
+  height: auto;
+  border: none;
+}
 
-  .team-abbr,
-  .matchResultTitle p {
-    margin: 0;
-  }
+.timelineContainer {
+  border-right: solid 2px #dedede;
+}
+
+.timelineContainer h5 {
+  font-size: 14px;
+}
+
+.container-match-info .row .col.timelineContainer {
+  padding: 0 5px;
+}
+
+.match-info .timeline .timeline-splitter {
+  height: 100%;
+  background: #333;
+  width: 6px;
+  left: calc(50% - 10px);
+  position: absolute;
+  border: 0;
+
+
+}
+
+.timelineError {
+  display: none;
+}
+
+.match-info .timeline {
+  height: calc(90vh - 54px);
+  padding-bottom: 0px;
+}
+
+.match-info .timeline .period-events {
+  position: relative;
+}
+
+.match-info .timeline .timeline-event {
+  margin-top: 10px;
+  position: relative;
+  height: 20px;
+  width: 100%;
+
+}
+
+.match-info .timeline .timeline-event.major-event .event-content {
+  width: 50%;
+  left: 22%;
+  background: white;
+  position: relative;
+  z-index: 50;
+  padding-bottom: 3px;
+  box-sizing: content-box;
+}
+
+.match-info .timeline .timeline-event .event-badge {
+  height: 20px;
+  width: 20px;
+  background: blue;
+  border: 1px solid black;
+  border-radius: 10px;
+  position: absolute;
+  left: calc(50% - 16px);
+  padding-top: 1px;
+  color: white;
+  text-align: center;
+  font-size: 10px;
+
+}
+
+.match-info .timeline .timeline-event .event-content {
+  border: 1px solid black;
+  border-radius: 3%;
+  width: 30%;
+  height: 20px;
+  position: absolute;
+  text-align: center;
+}
+
+.match-info .timeline .timeline-event.home .event-content {
+  background-color: #F44336
+}
+
+.match-info .timeline .timeline-event.away .event-content {
+  background-color: #4CAF50;
+  left: calc(50% + 10%)
+}
+
+.btn-small .period-selector {
+  margin-left: 5px;
+  margin-right: 5px;
+  width: 40px;
+  text-align: center;
+  padding: 0 0;
+}
+
+.timeline .row .s3 {
+  padding: 5px;
+}
+
+.fixture-active {
+  color: #ff2ef0;
+}
+
+/* Match Results */
+
+.homeTeam,
+.awayTeam {
+  text-align: center;
+}
+
+.vs h4 {
+  margin-top: revert;
+}
+
+.homeDisplayScore,
+.awayDisplayScore {
+  text-align: center;
+  margin: 5px 0;
+}
+
+.homeTeam img,
+.awayTeam img {
+  height: auto;
+  max-height: 40px;
+  max-width: 40px;
+  text-align: center;
+  margin: auto;
+  margin-top: 30px;
+}
+
+.homeStats tr,
+.homeStats tr td,
+.awayStats tr,
+.awayStats tr td {
+  height: 20px !important;
+  max-height: 20px !important;
+  padding: 0;
+}
+
+.row .venue,
+.venueDetails {
+  border-top: 1px solid black;
+  font-size: 14px;
+}
+
+.venueDetails p {
+  margin: 10px;
+}
+
+/* Vs Stats */
+
+.vsStats table {
+  height: 220px;
+}
+
+.vsStats tr,
+.vsStats tr td {
+  height: 20px !important;
+  max-height: 20px !important;
+  padding: 0;
+
+}
+
+.vsStats tr td {
+  border: 3px solid white;
+  border-radius: 6px;
+  max-width: 40px;
+  width: 40px;
+  font-size: 0.8rem;
+  text-align: center;
+  color: white;
+}
+
+.amber {
+  background-color: #FFBF00;
+}
+
+.team-abbr,
+.matchResultTitle p {
+  margin: 0;
 }
