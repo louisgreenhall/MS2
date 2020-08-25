@@ -43,14 +43,14 @@ $(() => {
     function collapse() {
         $('.ladder table').addClass("collapse");
         $('.ladder').removeClass("s4").addClass("s2 ladder-toggle");
-        $('.match-info').removeClass("s6").addClass("s8");
+        $('.match-info').removeClass("m6").addClass("m8");
         $(".buttonExpanded").toggleClass("hidden");
     }
 
     function expand() {
         $('.ladder table').removeClass("collapse");
         $('.ladder').addClass("s4").removeClass("s2 ladder-toggle");
-        $('.match-info').addClass("s6").removeClass("s8");
+        $('.match-info').addClass("m6").removeClass("m8");
         $(".buttonExpanded").toggleClass("hidden");
     }
 
@@ -143,8 +143,8 @@ $(() => {
             // add list element to matches list with matchId attribute that can be used later once link clicked.
             $(".matches").append(`<li style="padding-left:10px;"> <a href="#match-info" class="match" matchId="${matchId}">${match.sport_event.sport_event_context.stage.round} - ${match.sport_event.competitors[0].abbreviation} vs ${match.sport_event.competitors[1].abbreviation}</a></li>`)
         }
-
-        $(".match-info").show();
+        $("#match-info").addClass("visible");
+        $(".match-info").addClass("visible");
         $(".fixtures").show();
 
 

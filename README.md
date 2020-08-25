@@ -12,8 +12,6 @@ This website is for followers of the aussie rules sport, that wish to be informe
 
 - As a user I want to know if my team is likely to win their next match so that I can place bets or have peace of mind
 
-This section is also where you would share links to any wireframes, mockups, diagrams etc. that you created as part of the design process. These files should themselves either be included as a pdf file in the project itself (in an separate directory), or just hosted elsewhere online and can be in any format that is viewable inside the browser.
-
 ## Features
 
 -Ladder: shows the teams current ladder position of all 18 teams, pulling from the "standings" [endpoint](https://developer.sportradar.com/docs/read/australian_rules_football/Australian_Rules_Football_v2#season-standings) of the AFL API: From the page being loaded, the ladder is displaying standing number (1st - 18th) team logo, played, won, drawn and lost matches, as well as the goal/point difference which settles order of teams on the same amount of games won. This also minimises to serve as navigation where it then shows an abbreviatted version of the team names, team logos and standing position and percentage of points scored and conceded.
@@ -47,23 +45,24 @@ This section is also where you would share links to any wireframes, mockups, dia
 ## Technologies Used
 
 - [Materialize Framework](https://materializecss.com/)
-    - Used to provide responsiveness and structure to my website.
+    - I used **Materialize** to provide responsiveness and structure to my website.
 
 - [JQuery](https://jquery.com)
     - The project uses **JQuery** to simplify DOM manipulation.
 
 - [Json Formatter](https://jsonformatter.org/)
-To help me understand the structure of the data returned from the APIs, I used JSON formatter's tree view, since this gave an easy to understand visualisation of the data in a nested structure.
+    - To help me understand the structure of the data returned from the APIs, I used **JSON formatter's** tree view, since this gave an easy to understand visualisation of the data in a nested structure.
 
 - [Fiddler](https://www.telerik.com/download/fiddler-everywhere)
-Fiddler allowed my to save responses from my API without adding too heavily to my calls-per-month allowance from the AFL API (1000)
+    - **Fiddler** allowed my to save responses from my API without adding too heavily to my calls-per-month allowance from the AFL API (1000)
 
 - [MomentJS](https://momentjs.com/)
-MomentJS allowed me to reformat the date and times given by the API to show readable match date/times.
+    - **MomentJS** allowed me to reformat the date and times given by the API to show readable match date/times.
 
 ## Testing
 
-In addition, you should mention in this section how your project looks and works on different browsers and screen sizes.
+On Mobile views (fewer than 600px) a sidenav bar is used for navigation, with the expected burger icon. This opens up on click to allow the user to selcect a team. Within the sidenav is a collapsible section that closes the ladder on click and opens that teams' fixtures list for selection. The user once they've selected a team and/or a match can click off the navbar to see the latest match or chosen (respectively) stats, timeline and venue.
+Above 600px width the sidenav disappears and the ladder and fixtures are brought within the page, the tabs for stats, timeline and venue are still present but fixed to right hand side of the screen as apposed to center.
 
 
 I have used Cypress automated testing in order to test the functionality of my site, specifically the test check previous and future matches and whether certain html is populated from the API, I've also cheked whether fixtures and match timeline contain information. My testing JS file is located within cypress/intergration in a file named ["testing.spec.js"](https://github.com/louisgreenhall/MS2/blob/master/cypress/integration/testing.spec..js)

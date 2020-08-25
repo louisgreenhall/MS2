@@ -5,3 +5,10 @@
     overflow: hidden;
     padding: 5px;
 }
+#venueMob {
+    height: 500px;
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    padding: 5px;
+}

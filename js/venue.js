@@ -1,5 +1,6 @@
 let map;
 
+
 function initMap() {
 
     map = new google.maps.Map(document.getElementById("venue"), {
@@ -9,4 +10,5 @@ function initMap() {
             lng: 144.983333
         }
     });
+
 }
