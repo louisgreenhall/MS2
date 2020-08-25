@@ -19,6 +19,7 @@
 <body>
     <div id="gradient" class="">
         <div class="row">
+            <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>
             <div class="col s1">
                 <button class="buttonExpanded hidden ladderButton btn-small">Ladder</button>
             </div>
@@ -28,10 +29,51 @@
             <div class="col s1"></div>
         </div>
     </div>
+    <!-- Side Nav for mobile view -->
+    <div id="slide-out" class="ladder sidenav show-on-small hide-on-med-and-up">
 
+        <ul class="collapsible">
+            <li>
+                <div class="collapsible-header"><i class="material-icons">filter_drama</i>Ladder</div>
+                <div class="collapsible-body">
+                    <table class="">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th colspan="2" class="buttonExpanded hidden"></th>
+                                <th class="buttonExpanded"></th>
+                                <th>Name</th>
+                                <th class="tooltipped" data-position="top" data-tooltip="Matches Played">P</th>
+                                <th class="tooltipped" data-position="top" data-tooltip="Matches Won">W</th>
+                                <th class="tooltipped" data-position="top" data-tooltip="Matches Lost">L</th>
+                                <th class="tooltipped" data-position="top" data-tooltip="Matches Drawn">D</th>
+                                <th class="tooltipped" data-position="top"
+                                    data-tooltip="Points Scored / Points Conceded">%
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody class="standings">
+                        </tbody>
+                    </table>
+
+                </div>
+            </li>
+            <li>
+                <div class="collapsible-header"><i class="material-icons">place</i>Fixtures</div>
+                <div class="collapsible-body">
+                    <div class="fixtures">
+                        <ul class="matches scrollable">
+                        </ul>
+                    </div>
+                </div>
+            </li>
+        </ul>
+
+    </div>
+    <!-- Ladder Nav for tablet and desktop -->
     <section class="container">
         <div class="row">
-            <div class="ladder col s4">
+            <div class="ladder col s4 show-on-medium-and-up hide-on-small-only">
                 <table class="">
                     <thead>
                         <tr>
@@ -56,11 +98,12 @@
                 <h2 class="center-align">Welcome to Aussie Rules</h2>
                 <p class="center-align">Select a Team to get started</p>
             </div>
-            <div class="fixtures col s2">
+            <div class="fixtures show-on-medium-and-up hide-on-small-only">
                 <ul class="matches scrollable">
                 </ul>
             </div>
-            <div class="match-info col s6">
+            <!-- Match info for tablet and desktop -->
+            <div class="match-info col show-on-medium-and-up hide-on-small-only m6">
                 <div class="container-match-info">
                     <div style="height: 20px;" class="row">
                         <div class="col s12">
@@ -73,7 +116,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div id="timeline" class="timelineContainer scrollable col s12 l8">
+                        <div id="timeline" class="timelineContainer scrollable col s12">
                             <h5 class="center-align">Match Timeline</h5>
                             <div class="timelineError center-align">Timeline not available for future matches.</div>
                             <div class="row">
@@ -219,7 +262,7 @@
                                 </div>
                             </div>
                             <div id="map" class="map-container">
-                                <div  class="row">
+                                <div class="row">
                                     <div class="col s12">
                                         <div id="venue"> </div>
                                     </div>
@@ -237,8 +280,8 @@
                         </div>
                     </div>
                 </div>
+                
             </div>
-        </div>
     </section>
 
     <div id="gradientBottom" class=""></div>

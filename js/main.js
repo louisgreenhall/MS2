@@ -101,6 +101,8 @@ $(() => {
     $("body").on("click", ".team", async function (event) {
         $(".welcome").hide()
         $('.tabs').tabs();
+        $('.collapsible').collapsible('close', 0);
+        $('.collapsible').collapsible('open', 1);
 
 
         if (!$('.ladder table').hasClass("collapse")) {
@@ -231,7 +233,7 @@ $(() => {
     $("body").on("click", ".match", async function (event) {
 
         let id = $(event.target).attr("matchId"); // store matchId attribute of clicked element 
-
+        $('.sidenav').sidenav('close');
 
         const match = teamInfo.matches.find(function (m) {
             return m.sport_event.id == id;
@@ -581,12 +583,9 @@ $(() => {
     }
 
     // side nav & tooltip function from materialize
-    // document.addEventListener('DOMContentLoaded', function() {
-    //     var elems = document.querySelectorAll('.sidenav');
-    //     var instances = M.Sidenav.init(elems, options);
-    //   })
-
+    $('.sidenav').sidenav();
     $('.tooltipped').tooltip();
+    $('.collapsible').collapsible();
 
 });
 
