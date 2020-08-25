@@ -61,8 +61,8 @@ This website is for followers of the aussie rules sport, that wish to be informe
 
 ## Testing
 
-On Mobile views (fewer than 600px) a sidenav bar is used for navigation, with the expected burger icon. This opens up on click to allow the user to selcect a team. Within the sidenav is a collapsible section that closes the ladder on click and opens that teams' fixtures list for selection. The user once they've selected a team and/or a match can click off the navbar to see the latest match or chosen (respectively) stats, timeline and venue.
-Above 600px width the sidenav disappears and the ladder and fixtures are brought within the page, the tabs for stats, timeline and venue are still present but fixed to right hand side of the screen as apposed to center.
+On Mobile views (fewer than 992px) a sidenav bar is used for navigation, with the expected burger icon. This opens up on click to allow the user to selcect a team. Within the sidenav is a collapsible section that closes the ladder on click and opens that teams' fixtures list for selection. The user once they've selected a team and/or a match can click off the navbar to see the latest match or chosen (respectively) stats, timeline and venue.
+Above 992px width the sidenav disappears and the ladder and fixtures are brought within the page, the tabs for stats, timeline and venue are still present but fixed to right hand side of the screen as apposed to center.
 
 
 I have used Cypress automated testing in order to test the functionality of my site, specifically the test check previous and future matches and whether certain html is populated from the API, I've also cheked whether fixtures and match timeline contain information. My testing JS file is located within cypress/intergration in a file named ["testing.spec.js"](https://github.com/louisgreenhall/MS2/blob/master/cypress/integration/testing.spec..js)
