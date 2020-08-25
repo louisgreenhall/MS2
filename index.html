@@ -19,9 +19,9 @@
 <body>
     <div id="gradient" class="">
         <div class="row">
-            <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons hide-on-med-and-up">menu</i></a>
+            <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons hide-on-large-only">menu</i></a>
             <div class="col s1">
-                <button class="buttonExpanded hidden ladderButton btn-small hide-on-small-only">Ladder</button>
+                <button class="buttonExpanded hidden ladderButton btn-small hide-on-med-and-down">Ladder</button>
             </div>
             <div class="col s10">
                 <h6 class="center-align"></h6>
@@ -29,8 +29,8 @@
             <div class="col s1"></div>
         </div>
     </div>
-    <!-- Side Nav for mobile view -->
-    <div id="slide-out" class="ladder sidenav show-on-small hide-on-med-and-up">
+    <!-- Side Nav for mobile and tablet view -->
+    <div id="slide-out" class="ladder sidenav show-on-medium-and-down hide-on-large-only">
 
         <ul class="collapsible">
             <li>
@@ -70,10 +70,10 @@
         </ul>
 
     </div>
-    <!-- Ladder Nav for tablet and desktop -->
+    <!-- Ladder Nav for desktop -->
     <section class="container">
         <div class="row">
-            <div class="ladder col s4 show-on-medium-and-up hide-on-small-only">
+            <div class="ladder col s4 hide-on-med-and-down">
                 <table class="">
                     <thead>
                         <tr>
@@ -93,20 +93,20 @@
                     </tbody>
                 </table>
             </div>
-            <div class="welcome col s12 m8">
+            <div class="welcome col s12 l8">
                 <img src="assets/imgs/logo.png" class="center-align logo" alt="Aussie Rules Logo">
                 <h2 class="center-align">Welcome to Aussie Rules</h2>
                 <p class="center-align">Select a Team to get started</p>
             </div>
 
-            <!-- Fixtures for tablet and desktop -->
-            <div class="fixtures hide-on-small-only col m2">
+            <!-- Fixtures for desktop -->
+            <div class="fixtures hide-on-med-and-down col l2">
                 <ul class="matches scrollable">
                 </ul>
             </div>
 
-            <!-- Match info -->
-            <div id="match-info" class="match-info col m8">
+            <!-- Match info - all sizes -->
+            <div id="match-info" class="match-info col l8">
                 <div class="container-match-info">
                     <div style="height: 20px;" class="row">
                         <div class="col s12">
@@ -271,7 +271,7 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col s12 l8">
+                                    <div class="col s12">
                                         <div class="venueDetails">
                                             <p class="venueName"></p>
                                             <p class="venueCapacity"></p>
