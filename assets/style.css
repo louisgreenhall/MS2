@@ -5,6 +5,7 @@
 html,
 body {
   font-family: 'montserrat', sans-serif;
+  font-size: 18px;
   }
 
 @media screen and (min-width: 320px) and (max-width: 600px) {
@@ -56,7 +57,9 @@ body {
     padding: 0;
   }
 
- 
+  .fixtures {
+    border-right: 2px solid black;
+  }
 
 }
 
@@ -103,6 +106,20 @@ body {
   .welcome {
     text-align: center;
   }
+
+  .fixtures {
+    border-right: 2px solid black;
+    display: none;
+  }
+
+  .vsStats tr,
+.vsStats tr td {
+  height: 27px !important;
+  max-height: 27px !important;
+  padding: 0;
+
+}
+
 
  
 }
@@ -200,8 +217,8 @@ div button.ladderButton:focus {
 
 .standings tr td img {
   height: auto;
-  max-height: 21px;
-  max-width: 30px;
+  max-height: 35px;
+  min-height: 35;
   text-align: center;
   margin: auto;
 }
@@ -285,7 +302,13 @@ tr {
 }
 
 .fixtures li {
-  height: 40px;
+  height: 42px;
+  padding-top: 13px;
+  text-align: center;
+}
+
+.matches.scrollable {
+  margin-top: 30px;
 }
 
 /* MATCH INFO CSS*/
@@ -342,8 +365,6 @@ tr {
   left: calc(50% - 10px);
   position: absolute;
   border: 0;
-
-
 }
 
 .timelineError {
