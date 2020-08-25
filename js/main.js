@@ -72,12 +72,12 @@ $(() => {
                 $(".standings").append(`<tr abbreviation="${abbreviations[team.competitor_standing.competitor.name]}">
                                      <td>${team.competitor_standing.rank}</td>
                                      <td>
-                                        <a href="#match-info" class="team" competitorId="${team.competitor_standing.competitor.id}"> 
+                                        <a href="#" class="team" competitorId="${team.competitor_standing.competitor.id}"> 
                                             <img src="assets/imgs/${abbreviations[team.competitor_standing.competitor.name]}.png">
                                         </a>
                                     </td>
                                     <td>
-                                        <a href="#match-info" class="team" competitorId="${team.competitor_standing.competitor.id}"> 
+                                        <a href="#" class="team" competitorId="${team.competitor_standing.competitor.id}"> 
                                             ${abbreviations[team.competitor_standing.competitor.name]}
                                         </a>
                                     </td>
@@ -141,7 +141,7 @@ $(() => {
             let matchId = match.sport_event.id;
 
             // add list element to matches list with matchId attribute that can be used later once link clicked.
-            $(".matches").append(`<li style="padding-left:10px;"> <a href="#match-info" class="match" matchId="${matchId}">${match.sport_event.sport_event_context.stage.round} - ${match.sport_event.competitors[0].abbreviation} vs ${match.sport_event.competitors[1].abbreviation}</a></li>`)
+            $(".matches").append(`<li style="padding-left:10px;"> <a href="#" class="match" matchId="${matchId}">${match.sport_event.sport_event_context.stage.round} - ${match.sport_event.competitors[0].abbreviation} vs ${match.sport_event.competitors[1].abbreviation}</a></li>`)
         }
         $("#match-info").addClass("visible");
         $(".match-info").addClass("visible");
