@@ -69,6 +69,10 @@ div#slide-out {
     border-right: 2px solid black;
   }
 
+  table td:nth-child(3) {
+    display: none;
+  }
+
 }
 
 @media screen and (min-width: 1280px) {
@@ -222,7 +226,7 @@ div button.ladderButton:focus {
 .standings tr td img {
   height: auto;
   max-height: 35px;
-  min-height: 35;
+  min-height: 35px;
   text-align: center;
   margin: auto;
 }
@@ -339,7 +343,6 @@ tr {
   height: auto;
   padding: 5px;
 }
-}
 
 #match-info .row .col .row .col {
   height: auto;
@@ -422,14 +425,17 @@ tr {
   text-align: center;
 }
 
-#match-info .timeline .timeline-event.home .event-content {
+#match-info .timeline .timeline-event.away .event-content {
   background-color: #F44336;
   left:60%;
+  font-size: 14px;
+
 }
 
-#match-info .timeline .timeline-event.away .event-content {
+#match-info .timeline .timeline-event.home .event-content {
   background-color: #4CAF50;
-  right: calc(60% + 16px)
+  right: calc(60% + 16px);
+  font-size: 14px;
 }
 
 .btn-small .period-selector {

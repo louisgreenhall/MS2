@@ -110,7 +110,7 @@ $(() => {
         } // If ladder is not collapsed, clicking team name will auto collapse 
 
         let target = event.target;
-        console.log(target)
+        
         if ($(event.target).first().tagName != "A") {
             target = $(event.target).closest("a");
         }
@@ -286,7 +286,7 @@ $(() => {
 
     $(".period-selector").on("click", function (event) {
         let id = $(event.target).attr("period");
-        console.log(id);
+        
         $(".period").hide();
         $(`.${id}`).show();
     })
@@ -314,7 +314,7 @@ $(() => {
         const latLngSplit = latLng.split(',');
         let lat = Number.parseFloat(latLngSplit[0]);
         let lng = Number.parseFloat(latLngSplit[1]);
-        console.log(latLng)
+        
         let realLatLng = {
             lat: lat,
             lng: lng
@@ -343,8 +343,9 @@ $(() => {
     }
 
     function populateMatchStats(latestMatch) {
-
+        $(".fixtures li a").removeClass("fixture-active");
         $(`[matchId='${latestMatch.sport_event.id}']`).addClass("fixture-active");
+        
         // want to show the match when I find the latest match.
 
         $(".vsStats").show()
@@ -365,7 +366,7 @@ $(() => {
 
         $(".homeDisplayScore").append(`${latestMatch.sport_event_status.home_display_score}`)
         $(".awayDisplayScore").append(`${latestMatch.sport_event_status.away_display_score}`)
-        console.log(`${latestMatch.sport_event.id}`)
+        
 
 
         const homeStats = homeTeam.statistics;
@@ -588,12 +589,3 @@ $(() => {
     $('.collapsible').collapsible();
 
 });
-
-
-
-//MAP
-//
-// match.sport_event.venue.capacity
-// match.sport_event.venue.city_name
-// match.sport_event.venue.map_coordinates
-// match.sport_event.venue.name
