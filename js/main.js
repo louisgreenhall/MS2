@@ -2,6 +2,7 @@
 // let 2ndApiKeyV2 = "8rq4qb4y9wpvm8czed2j7fz9"
 // let 3rdApiKeyV2 = "umfmpvapcrzjuhhw73mbysgh"
 // le googleMapsApiKey = "AIzaSyDWYUEHSzOcPWpL6lJq9T_CilOpqRs7c2w"
+// 2021 key: a2b8gd6xvrnhjaarys8p5yyn
 
 $(() => {
     const abbreviations = {
@@ -58,7 +59,7 @@ $(() => {
 
 
 
-    let standingsUrl = `https://corsaway.herokuapp.com/proxy?url=https://api.sportradar.com/australianrules/trial/v2/en/seasons/${seasonId}/standings.json?api_key=umfmpvapcrzjuhhw73mbysgh`;
+    let standingsUrl = `https://corsaway.herokuapp.com/proxy?url=https://api.sportradar.com/australianrules/trial/v2/en/seasons/${seasonId}/standings.json?api_key=a2b8gd6xvrnhjaarys8p5yyn`;
     fetch(standingsUrl)
         .then(handleErrors)
         .then(response => {
@@ -490,7 +491,7 @@ $(() => {
     // reusable function to get the season details from the api
     function fetchSeasonDetails(seasonId) {
 
-        return fetch(`https://corsaway.herokuapp.com/proxy?url=https://api.sportradar.com/australianrules/trial/v2/en/seasons/${seasonId}/summaries.json?api_key=umfmpvapcrzjuhhw73mbysgh`)
+        return fetch(`https://corsaway.herokuapp.com/proxy?url=https://api.sportradar.com/australianrules/trial/v2/en/seasons/${seasonId}/summaries.json?api_key=a2b8gd6xvrnhjaarys8p5yyn`)
             .then(handleErrors)
             .then(function (response) {
                 return response.json();
@@ -519,7 +520,7 @@ $(() => {
 
     function fetchMatchTimeline(matchId) {
 
-        let timelineUrl = `https://corsaway.herokuapp.com/proxy?url=https://api.sportradar.com/australianrules/trial/v2/en/match/${matchId}/timeline.json?api_key=umfmpvapcrzjuhhw73mbysgh`
+        let timelineUrl = `https://corsaway.herokuapp.com/proxy?url=https://api.sportradar.com/australianrules/trial/v2/en/match/${matchId}/timeline.json?api_key=a2b8gd6xvrnhjaarys8p5yyn`
         return fetch(timelineUrl)
             .then(handleErrors)
             .then(function (response) {
@@ -555,7 +556,7 @@ $(() => {
     }
 
     function fetchMatchProbabilities(matchId) {
-        let probUrl = `https://corsaway.herokuapp.com/proxy?url=https://api.sportradar.com/australianrules/trial/v2/en/matches/${matchId}/probabilities.json?api_key=umfmpvapcrzjuhhw73mbysgh`
+        let probUrl = `https://corsaway.herokuapp.com/proxy?url=https://api.sportradar.com/australianrules/trial/v2/en/matches/${matchId}/probabilities.json?api_key=a2b8gd6xvrnhjaarys8p5yyn`
         return fetch(probUrl)
             .then(handleErrors)
 
